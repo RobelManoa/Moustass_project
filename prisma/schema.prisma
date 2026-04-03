@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum LicenseStatus {
+  ACTIVE
+  SUSPENDED
+  EXPIRED
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  passwordHash String
+  name         String
+  role         Role           @default(USER)
+  oidcSubject  String?        @unique
+  messages     VideoMessage[]
+  audits       Audit[]
+  keys         CryptoKey[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model VideoMessage {
+  id               String   @id @default(cuid())
+  ownerId          String
+  title            String
+  description      String?
+  originalFileName String
+  mimeType         String
+  storagePath      String
+  mediaSha256      String
+  mediaSignature   String
+  manifestJson     Json
+  deletedAt        DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  owner            User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+}
+
+model Audit {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  resource   String
+  resourceId String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([action])
+  @@index([resource, resourceId])
+}
+
+model CryptoKey {
+  id           String   @id @default(cuid())
+  ownerId      String?
+  label        String
+  algorithm    String   @default("PS256")
+  publicKeyPem String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  owner        User?    @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+}
+
+model License {
+  id          String        @id @default(cuid())
+  clientName  String        @unique
+  status      LicenseStatus @default(ACTIVE)
+  expiresAt   DateTime?
+  payloadJson Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
