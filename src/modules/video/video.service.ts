@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import type { Prisma } from '@prisma/client';
 import { env } from '../../config/env';
 import { prisma } from '../../infrastructure/prisma';
 import { badRequest, forbidden, notFound } from '../../shared/http-errors';
@@ -63,7 +64,7 @@ export async function uploadMessage(input: {
       storagePath,
       mediaSha256,
       mediaSignature,
-      manifestJson: manifest,
+      manifestJson: manifest as unknown as Prisma.InputJsonValue,
     },
   });
 

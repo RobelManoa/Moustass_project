@@ -3,6 +3,14 @@ import { asyncHandler } from '../../shared/async-handler';
 import { badRequest } from '../../shared/http-errors';
 import { createMessageReadStream, openMessageStream, removeMessage, uploadMessage } from './video.service';
 
+function getIdParam(request: Request) {
+  const { id } = request.params;
+  if (Array.isArray(id) || !id) {
+    throw badRequest('Parametre id invalide');
+  }
+  return id;
+}
+
 export const upload = asyncHandler(async (request: Request, response: Response) => {
   if (!request.file) {
     throw badRequest('Fichier vidéo manquant');
@@ -22,7 +30,7 @@ export const upload = asyncHandler(async (request: Request, response: Response) 
 });
 
 export const read = asyncHandler(async (request: Request, response: Response) => {
-  const message = await openMessageStream(request.params.id, request.auth!);
+  const message = await openMessageStream(getIdParam(request), request.auth!);
 
   response.setHeader('Content-Type', message.mimeType);
   response.setHeader('Content-Disposition', `inline; filename="${message.originalFileName}"`);
@@ -30,6 +38,6 @@ export const read = asyncHandler(async (request: Request, response: Response) =>
 });
 
 export const remove = asyncHandler(async (request: Request, response: Response) => {
-  const result = await removeMessage(request.params.id, request.auth!);
+  const result = await removeMessage(getIdParam(request), request.auth!);
   response.json(result);
 });
