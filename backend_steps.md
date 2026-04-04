@@ -42,7 +42,7 @@ Le backend lit ses variables via `src/config/env.ts`.
 Variables necessaires:
 
 - `DATABASE_URL` (obligatoire)
-- `PORT` (defaut: 3000)
+- `PORT` (defaut: 3001)
 - `NODE_ENV` (development/test/production)
 - `CLIENT_NAME` (defaut: Client A)
 - `APP_VERSION` (defaut: 1.0.0)
@@ -63,7 +63,7 @@ Exemple minimal de `.env`:
 
 ```env
 NODE_ENV=development
-PORT=3000
+PORT=3001
 CLIENT_NAME=Client A
 APP_VERSION=1.0.0
 DATABASE_URL=mysql://root:password@localhost:3306/moustass
