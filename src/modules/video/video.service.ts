@@ -3,12 +3,14 @@ import { createReadStream } from 'node:fs';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Prisma } from '@prisma/client';
+
 import { env } from '../../config/env';
 import { prisma } from '../../infrastructure/prisma';
 import { badRequest, forbidden, notFound } from '../../shared/http-errors';
 import { recordAudit } from '../audit/audit.service';
 import { buildMessageManifest, sha256, signManifest, verifyManifest, type MessageManifest } from '../crypto/crypto.service';
 import { getMessageById } from '../metadata/metadata.service';
+import { JwtClaims } from '../../shared/security/jwt';   // ← Correction importante
 
 function getStorageRoot() {
   return path.resolve(process.cwd(), env.UPLOAD_DIR);
@@ -19,7 +21,7 @@ function sanitizeFileName(fileName: string) {
 }
 
 export async function uploadMessage(input: {
-  actor: Express.AuthContext;
+  actor: JwtClaims;                    // déjà bon
   file: Express.Multer.File;
   title: string;
   description?: string;
@@ -34,6 +36,7 @@ export async function uploadMessage(input: {
   const messageId = randomUUID();
   const safeFileName = sanitizeFileName(input.file.originalname);
   const storagePath = path.join(storageRoot, `${messageId}-${safeFileName}`);
+
   const mediaSha256 = sha256(input.file.buffer);
 
   const manifest = buildMessageManifest({
@@ -79,13 +82,15 @@ export async function uploadMessage(input: {
   return message;
 }
 
-export async function openMessageStream(id: string, actor: Express.AuthContext) {
+// ==================== CORRECTIONS ICI ====================
+export async function openMessageStream(id: string, actor: JwtClaims) {
   const message = await getMessageById(id);
 
   if (!message || message.deletedAt) {
     throw notFound('Message introuvable');
   }
 
+  // Vérification des droits
   if (message.ownerId !== actor.userId && actor.role !== 'ADMIN') {
     throw forbidden('Accès refusé');
   }
@@ -100,17 +105,19 @@ export async function openMessageStream(id: string, actor: Express.AuthContext) 
   return message;
 }
 
-export async function removeMessage(id: string, actor: Express.AuthContext) {
+export async function removeMessage(id: string, actor: JwtClaims) {
   const message = await getMessageById(id);
 
   if (!message || message.deletedAt) {
     throw notFound('Message introuvable');
   }
 
+  // Vérification des droits
   if (message.ownerId !== actor.userId && actor.role !== 'ADMIN') {
     throw forbidden('Accès refusé');
   }
 
+  // Suppression physique du fichier (on ignore l'erreur si le fichier n'existe plus)
   await unlink(message.storagePath).catch(() => undefined);
 
   await prisma.videoMessage.update({

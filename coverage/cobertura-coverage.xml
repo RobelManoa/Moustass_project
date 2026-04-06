@@ -1,0 +1,959 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage lines-valid="394" lines-covered="231" line-rate="0.5861999999999999" branches-valid="111" branches-covered="18" branch-rate="0.16210000000000002" timestamp="1775500469186" complexity="0" version="0.1">
+  <sources>
+    <source>/media/robel/53e1aedc-bbb8-444c-ac36-5f9472e1cb341/projets/projet-IAC/backend_moustass</source>
+  </sources>
+  <packages>
+    <package name="src" line-rate="0.8787" branch-rate="0.5832999999999999">
+      <classes>
+        <class name="app.ts" filename="src/app.ts" line-rate="0.8787" branch-rate="0.5832999999999999">
+          <methods>
+            <method name="(anonymous_1)" hits="1" signature="()V">
+              <lines>
+                <line number="28" hits="1"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="29" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="2" signature="()V">
+              <lines>
+                <line number="39" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="false"/>
+            <line number="8" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="12" hits="2" branch="false"/>
+            <line number="13" hits="2" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+            <line number="16" hits="2" branch="false"/>
+            <line number="18" hits="2" branch="false"/>
+            <line number="19" hits="2" branch="false"/>
+            <line number="20" hits="2" branch="false"/>
+            <line number="21" hits="2" branch="false"/>
+            <line number="22" hits="2" branch="false"/>
+            <line number="25" hits="2" branch="false"/>
+            <line number="28" hits="2" branch="false"/>
+            <line number="29" hits="2" branch="false"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="37" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="39" hits="2" branch="false"/>
+            <line number="42" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="43" hits="2" branch="false"/>
+            <line number="47" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="48" hits="0" branch="false"/>
+            <line number="52" hits="2" branch="true" condition-coverage="75% (3/4)"/>
+            <line number="53" hits="0" branch="false"/>
+            <line number="57" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="58" hits="0" branch="false"/>
+            <line number="62" hits="2" branch="false"/>
+            <line number="63" hits="2" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.config" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="env.ts" filename="src/config/env.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="2" hits="3" branch="false"/>
+            <line number="4" hits="3" branch="false"/>
+            <line number="7" hits="3" branch="false"/>
+            <line number="9" hits="3" branch="false"/>
+            <line number="47" hits="3" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.infrastructure" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="prisma.ts" filename="src/infrastructure/prisma.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="2" hits="3" branch="false"/>
+            <line number="4" hits="3" branch="false"/>
+            <line number="6" hits="3" branch="false"/>
+            <line number="8" hits="3" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.audit" line-rate="0.6666" branch-rate="1">
+      <classes>
+        <class name="audit.service.ts" filename="src/modules/audit/audit.service.ts" line-rate="0.6666" branch-rate="1">
+          <methods>
+            <method name="recordAudit" hits="0" signature="()V">
+              <lines>
+                <line number="4" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.auth" line-rate="0.878" branch-rate="0.625">
+      <classes>
+        <class name="auth.controller.ts" filename="src/modules/auth/auth.controller.ts" line-rate="0.9" branch-rate="0.5">
+          <methods>
+            <method name="(anonymous_9)" hits="2" signature="()V">
+              <lines>
+                <line number="5" hits="2"/>
+              </lines>
+            </method>
+            <method name="(anonymous_10)" hits="1" signature="()V">
+              <lines>
+                <line number="10" hits="1"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="false"/>
+            <line number="7" hits="1" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="12" hits="1" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="13" hits="0" branch="false"/>
+            <line number="16" hits="1" branch="false"/>
+            <line number="17" hits="1" branch="false"/>
+          </lines>
+        </class>
+        <class name="auth.routes.ts" filename="src/modules/auth/auth.routes.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="12" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="auth.schemas.ts" filename="src/modules/auth/auth.schemas.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="auth.service.ts" filename="src/modules/auth/auth.service.ts" line-rate="0.8" branch-rate="0.6666">
+          <methods>
+            <method name="login" hits="3" signature="()V">
+              <lines>
+                <line number="9" hits="3"/>
+              </lines>
+            </method>
+            <method name="me" hits="0" signature="()V">
+              <lines>
+                <line number="37" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="3" branch="false"/>
+            <line number="14" hits="3" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="16" hits="1" branch="false"/>
+            <line number="19" hits="2" branch="false"/>
+            <line number="20" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="21" hits="1" branch="false"/>
+            <line number="24" hits="1" branch="false"/>
+            <line number="31" hits="1" branch="false"/>
+            <line number="37" hits="2" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="43" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="44" hits="0" branch="false"/>
+            <line number="47" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.crypto" line-rate="1" branch-rate="1">
+      <classes>
+        <class name="crypto.service.ts" filename="src/modules/crypto/crypto.service.ts" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="2" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="3" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="4" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="5" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.license" line-rate="0.54" branch-rate="0">
+      <classes>
+        <class name="license.controller.ts" filename="src/modules/license/license.controller.ts" line-rate="0.36840000000000006" branch-rate="0">
+          <methods>
+            <method name="getIdParam" hits="0" signature="()V">
+              <lines>
+                <line number="6" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_10)" hits="0" signature="()V">
+              <lines>
+                <line number="14" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_11)" hits="0" signature="()V">
+              <lines>
+                <line number="19" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_12)" hits="0" signature="()V">
+              <lines>
+                <line number="24" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_13)" hits="0" signature="()V">
+              <lines>
+                <line number="29" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="7" hits="0" branch="false"/>
+            <line number="8" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="9" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+            <line number="15" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="19" hits="2" branch="false"/>
+            <line number="20" hits="0" branch="false"/>
+            <line number="21" hits="0" branch="false"/>
+            <line number="24" hits="2" branch="false"/>
+            <line number="25" hits="0" branch="false"/>
+            <line number="26" hits="0" branch="false"/>
+            <line number="29" hits="2" branch="false"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="31" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="license.routes.ts" filename="src/modules/license/license.routes.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="11" hits="2" branch="false"/>
+            <line number="12" hits="2" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="license.schemas.ts" filename="src/modules/license/license.schemas.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="license.service.ts" filename="src/modules/license/license.service.ts" line-rate="0.3529" branch-rate="0">
+          <methods>
+            <method name="listLicenses" hits="0" signature="()V">
+              <lines>
+                <line number="5" hits="0"/>
+              </lines>
+            </method>
+            <method name="createLicense" hits="0" signature="()V">
+              <lines>
+                <line number="11" hits="0"/>
+              </lines>
+            </method>
+            <method name="updateLicense" hits="0" signature="()V">
+              <lines>
+                <line number="27" hits="0"/>
+              </lines>
+            </method>
+            <method name="deleteLicense" hits="0" signature="()V">
+              <lines>
+                <line number="53" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="0" branch="false"/>
+            <line number="11" hits="2" branch="false"/>
+            <line number="17" hits="0" branch="false"/>
+            <line number="27" hits="2" branch="false"/>
+            <line number="36" hits="0" branch="false"/>
+            <line number="38" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="39" hits="0" branch="false"/>
+            <line number="42" hits="0" branch="false"/>
+            <line number="53" hits="2" branch="false"/>
+            <line number="54" hits="0" branch="false"/>
+            <line number="56" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="57" hits="0" branch="false"/>
+            <line number="60" hits="0" branch="false"/>
+            <line number="61" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.metadata" line-rate="0.6" branch-rate="0">
+      <classes>
+        <class name="metadata.service.ts" filename="src/modules/metadata/metadata.service.ts" line-rate="0.6" branch-rate="0">
+          <methods>
+            <method name="getMessageById" hits="0" signature="()V">
+              <lines>
+                <line number="3" hits="0"/>
+              </lines>
+            </method>
+            <method name="listMessagesForActor" hits="0" signature="()V">
+              <lines>
+                <line number="10" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="0" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.user" line-rate="0.44770000000000004" branch-rate="0">
+      <classes>
+        <class name="user.controller.ts" filename="src/modules/user/user.controller.ts" line-rate="0.36840000000000006" branch-rate="0">
+          <methods>
+            <method name="getIdParam" hits="0" signature="()V">
+              <lines>
+                <line number="6" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_10)" hits="0" signature="()V">
+              <lines>
+                <line number="14" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_11)" hits="0" signature="()V">
+              <lines>
+                <line number="19" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_12)" hits="0" signature="()V">
+              <lines>
+                <line number="24" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_13)" hits="0" signature="()V">
+              <lines>
+                <line number="29" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="7" hits="0" branch="false"/>
+            <line number="8" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="9" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+            <line number="15" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="19" hits="2" branch="false"/>
+            <line number="20" hits="0" branch="false"/>
+            <line number="21" hits="0" branch="false"/>
+            <line number="24" hits="2" branch="false"/>
+            <line number="25" hits="0" branch="false"/>
+            <line number="26" hits="0" branch="false"/>
+            <line number="29" hits="2" branch="false"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="31" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="user.routes.ts" filename="src/modules/user/user.routes.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="11" hits="2" branch="false"/>
+            <line number="12" hits="2" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="user.schemas.ts" filename="src/modules/user/user.schemas.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="user.service.ts" filename="src/modules/user/user.service.ts" line-rate="0.2647" branch-rate="0">
+          <methods>
+            <method name="toPublicUser" hits="1" signature="()V">
+              <lines>
+                <line number="6" hits="1"/>
+              </lines>
+            </method>
+            <method name="listUsers" hits="0" signature="()V">
+              <lines>
+                <line number="24" hits="0"/>
+              </lines>
+            </method>
+            <method name="createUser" hits="0" signature="()V">
+              <lines>
+                <line number="32" hits="0"/>
+              </lines>
+            </method>
+            <method name="updateUser" hits="0" signature="()V">
+              <lines>
+                <line number="58" hits="0"/>
+              </lines>
+            </method>
+            <method name="deleteUser" hits="0" signature="()V">
+              <lines>
+                <line number="83" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="3" hits="3" branch="false"/>
+            <line number="4" hits="3" branch="false"/>
+            <line number="6" hits="3" branch="false"/>
+            <line number="14" hits="1" branch="false"/>
+            <line number="24" hits="3" branch="false"/>
+            <line number="25" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="32" hits="3" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="40" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="41" hits="0" branch="false"/>
+            <line number="44" hits="0" branch="false"/>
+            <line number="46" hits="0" branch="false"/>
+            <line number="55" hits="0" branch="false"/>
+            <line number="58" hits="3" branch="false"/>
+            <line number="59" hits="0" branch="false"/>
+            <line number="61" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="62" hits="0" branch="false"/>
+            <line number="65" hits="0" branch="false"/>
+            <line number="67" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="68" hits="0" branch="false"/>
+            <line number="71" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="72" hits="0" branch="false"/>
+            <line number="75" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="76" hits="0" branch="false"/>
+            <line number="79" hits="0" branch="false"/>
+            <line number="80" hits="0" branch="false"/>
+            <line number="83" hits="3" branch="false"/>
+            <line number="84" hits="0" branch="false"/>
+            <line number="86" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="87" hits="0" branch="false"/>
+            <line number="90" hits="0" branch="false"/>
+            <line number="91" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.modules.video" line-rate="0.36579999999999996" branch-rate="0">
+      <classes>
+        <class name="video.controller.ts" filename="src/modules/video/video.controller.ts" line-rate="0.2727" branch-rate="0">
+          <methods>
+            <method name="getIdParam" hits="0" signature="()V">
+              <lines>
+                <line number="6" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="14" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="32" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="40" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="7" hits="0" branch="false"/>
+            <line number="8" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="9" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+            <line number="15" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="20" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="22" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="32" hits="2" branch="false"/>
+            <line number="33" hits="0" branch="false"/>
+            <line number="35" hits="0" branch="false"/>
+            <line number="36" hits="0" branch="false"/>
+            <line number="37" hits="0" branch="false"/>
+            <line number="40" hits="2" branch="false"/>
+            <line number="41" hits="0" branch="false"/>
+            <line number="42" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="video.routes.ts" filename="src/modules/video/video.routes.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="11" hits="2" branch="false"/>
+            <line number="13" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="video.service.ts" filename="src/modules/video/video.service.ts" line-rate="0.28" branch-rate="0">
+          <methods>
+            <method name="getStorageRoot" hits="0" signature="()V">
+              <lines>
+                <line number="15" hits="0"/>
+              </lines>
+            </method>
+            <method name="sanitizeFileName" hits="0" signature="()V">
+              <lines>
+                <line number="19" hits="0"/>
+              </lines>
+            </method>
+            <method name="uploadMessage" hits="0" signature="()V">
+              <lines>
+                <line number="23" hits="0"/>
+              </lines>
+            </method>
+            <method name="openMessageStream" hits="0" signature="()V">
+              <lines>
+                <line number="86" hits="0"/>
+              </lines>
+            </method>
+            <method name="removeMessage" hits="0" signature="()V">
+              <lines>
+                <line number="108" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="0" signature="()V">
+              <lines>
+                <line number="121" hits="0"/>
+              </lines>
+            </method>
+            <method name="createMessageReadStream" hits="0" signature="()V">
+              <lines>
+                <line number="138" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="2" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="8" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="false"/>
+            <line number="11" hits="2" branch="false"/>
+            <line number="12" hits="2" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="20" hits="0" branch="false"/>
+            <line number="23" hits="2" branch="false"/>
+            <line number="29" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="33" hits="0" branch="false"/>
+            <line number="34" hits="0" branch="false"/>
+            <line number="36" hits="0" branch="false"/>
+            <line number="37" hits="0" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="40" hits="0" branch="false"/>
+            <line number="42" hits="0" branch="false"/>
+            <line number="55" hits="0" branch="false"/>
+            <line number="57" hits="0" branch="false"/>
+            <line number="59" hits="0" branch="false"/>
+            <line number="74" hits="0" branch="false"/>
+            <line number="82" hits="0" branch="false"/>
+            <line number="86" hits="2" branch="false"/>
+            <line number="87" hits="0" branch="false"/>
+            <line number="89" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="90" hits="0" branch="false"/>
+            <line number="94" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="95" hits="0" branch="false"/>
+            <line number="98" hits="0" branch="false"/>
+            <line number="99" hits="0" branch="false"/>
+            <line number="101" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="102" hits="0" branch="false"/>
+            <line number="105" hits="0" branch="false"/>
+            <line number="108" hits="2" branch="false"/>
+            <line number="109" hits="0" branch="false"/>
+            <line number="111" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="112" hits="0" branch="false"/>
+            <line number="116" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="117" hits="0" branch="false"/>
+            <line number="121" hits="0" branch="false"/>
+            <line number="123" hits="0" branch="false"/>
+            <line number="128" hits="0" branch="false"/>
+            <line number="135" hits="0" branch="false"/>
+            <line number="138" hits="2" branch="false"/>
+            <line number="139" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.shared" line-rate="0.8125" branch-rate="0">
+      <classes>
+        <class name="async-handler.ts" filename="src/shared/async-handler.ts" line-rate="1" branch-rate="1">
+          <methods>
+            <method name="asyncHandler" hits="26" signature="()V">
+              <lines>
+                <line number="3" hits="26"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="3" signature="()V">
+              <lines>
+                <line number="4" hits="3"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="2" branch="false"/>
+            <line number="4" hits="26" branch="false"/>
+            <line number="5" hits="3" branch="false"/>
+          </lines>
+        </class>
+        <class name="http-errors.ts" filename="src/shared/http-errors.ts" line-rate="0.7692" branch-rate="0">
+          <methods>
+            <method name="(anonymous_0)" hits="6" signature="()V">
+              <lines>
+                <line number="5" hits="6"/>
+              </lines>
+            </method>
+            <method name="badRequest" hits="0" signature="()V">
+              <lines>
+                <line number="13" hits="0"/>
+              </lines>
+            </method>
+            <method name="unauthorized" hits="6" signature="()V">
+              <lines>
+                <line number="17" hits="6"/>
+              </lines>
+            </method>
+            <method name="forbidden" hits="0" signature="()V">
+              <lines>
+                <line number="21" hits="0"/>
+              </lines>
+            </method>
+            <method name="notFound" hits="0" signature="()V">
+              <lines>
+                <line number="25" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="6" hits="6" branch="false"/>
+            <line number="7" hits="6" branch="false"/>
+            <line number="8" hits="6" branch="false"/>
+            <line number="9" hits="6" branch="false"/>
+            <line number="13" hits="3" branch="false"/>
+            <line number="14" hits="0" branch="false"/>
+            <line number="17" hits="3" branch="true" condition-coverage="0% (0/1)"/>
+            <line number="18" hits="6" branch="false"/>
+            <line number="21" hits="3" branch="true" condition-coverage="0% (0/1)"/>
+            <line number="22" hits="0" branch="false"/>
+            <line number="25" hits="3" branch="true" condition-coverage="0% (0/1)"/>
+            <line number="26" hits="0" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.shared.middleware" line-rate="0.7073" branch-rate="0.35710000000000003">
+      <classes>
+        <class name="authenticate.ts" filename="src/shared/middleware/authenticate.ts" line-rate="0.6666" branch-rate="0.25">
+          <methods>
+            <method name="(anonymous_0)" hits="2" signature="()V">
+              <lines>
+                <line number="5" hits="2"/>
+              </lines>
+            </method>
+            <method name="requireRole" hits="16" signature="()V">
+              <lines>
+                <line number="23" hits="16"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="24" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="2" branch="false"/>
+            <line number="8" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="9" hits="1" branch="false"/>
+            <line number="12" hits="1" branch="false"/>
+            <line number="14" hits="1" branch="false"/>
+            <line number="15" hits="1" branch="false"/>
+            <line number="16" hits="1" branch="false"/>
+            <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="23" hits="2" branch="false"/>
+            <line number="24" hits="16" branch="false"/>
+            <line number="25" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="26" hits="0" branch="false"/>
+            <line number="29" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="30" hits="0" branch="false"/>
+            <line number="33" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="error-handler.ts" filename="src/shared/middleware/error-handler.ts" line-rate="0.6666" branch-rate="0.5">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="5" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="2" signature="()V">
+              <lines>
+                <line number="9" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="2" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="0" branch="false"/>
+            <line number="9" hits="2" branch="false"/>
+            <line number="10" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="15" hits="0" branch="false"/>
+            <line number="18" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="19" hits="2" branch="false"/>
+            <line number="23" hits="2" branch="false"/>
+            <line number="26" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="rate-limit.ts" filename="src/shared/middleware/rate-limit.ts" line-rate="1" branch-rate="1">
+          <methods>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="3" hits="2" branch="false"/>
+          </lines>
+        </class>
+        <class name="validate.ts" filename="src/shared/middleware/validate.ts" line-rate="0.7777" branch-rate="0.5">
+          <methods>
+            <method name="validateBody" hits="10" signature="()V">
+              <lines>
+                <line number="5" hits="10"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="2" signature="()V">
+              <lines>
+                <line number="6" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="2" branch="false"/>
+            <line number="5" hits="2" branch="false"/>
+            <line number="6" hits="10" branch="false"/>
+            <line number="7" hits="2" branch="false"/>
+            <line number="9" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="10" hits="0" branch="false"/>
+            <line number="11" hits="0" branch="false"/>
+            <line number="14" hits="2" branch="false"/>
+            <line number="15" hits="2" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+    <package name="src.shared.security" line-rate="0.4" branch-rate="0.1">
+      <classes>
+        <class name="crypto.ts" filename="src/shared/security/crypto.ts" line-rate="0.258" branch-rate="0">
+          <methods>
+            <method name="getKeyPair" hits="0" signature="()V">
+              <lines>
+                <line number="27" hits="0"/>
+              </lines>
+            </method>
+            <method name="sha256" hits="0" signature="()V">
+              <lines>
+                <line number="50" hits="0"/>
+              </lines>
+            </method>
+            <method name="buildMessageManifest" hits="0" signature="()V">
+              <lines>
+                <line number="54" hits="0"/>
+              </lines>
+            </method>
+            <method name="stringifyManifest" hits="0" signature="()V">
+              <lines>
+                <line number="61" hits="0"/>
+              </lines>
+            </method>
+            <method name="signManifest" hits="0" signature="()V">
+              <lines>
+                <line number="77" hits="0"/>
+              </lines>
+            </method>
+            <method name="verifyManifest" hits="0" signature="()V">
+              <lines>
+                <line number="93" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="2" branch="false"/>
+            <line number="8" hits="2" branch="false"/>
+            <line number="24" hits="2" branch="false"/>
+            <line number="25" hits="2" branch="false"/>
+            <line number="28" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="29" hits="0" branch="false"/>
+            <line number="32" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="33" hits="0" branch="false"/>
+            <line number="34" hits="0" branch="false"/>
+            <line number="35" hits="0" branch="false"/>
+            <line number="38" hits="0" branch="false"/>
+            <line number="44" hits="0" branch="false"/>
+            <line number="45" hits="0" branch="false"/>
+            <line number="47" hits="0" branch="false"/>
+            <line number="50" hits="2" branch="false"/>
+            <line number="51" hits="0" branch="false"/>
+            <line number="54" hits="2" branch="false"/>
+            <line number="55" hits="0" branch="false"/>
+            <line number="62" hits="0" branch="false"/>
+            <line number="77" hits="2" branch="false"/>
+            <line number="78" hits="0" branch="false"/>
+            <line number="79" hits="0" branch="false"/>
+            <line number="80" hits="0" branch="false"/>
+            <line number="81" hits="0" branch="false"/>
+            <line number="83" hits="0" branch="false"/>
+            <line number="93" hits="2" branch="false"/>
+            <line number="94" hits="0" branch="false"/>
+            <line number="95" hits="0" branch="false"/>
+            <line number="96" hits="0" branch="false"/>
+            <line number="97" hits="0" branch="false"/>
+            <line number="99" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="jwt.ts" filename="src/shared/security/jwt.ts" line-rate="0.8887999999999999" branch-rate="0.5">
+          <methods>
+            <method name="signAuthToken" hits="3" signature="()V">
+              <lines>
+                <line number="11" hits="3"/>
+              </lines>
+            </method>
+            <method name="verifyAuthToken" hits="2" signature="()V">
+              <lines>
+                <line number="21" hits="2"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="1" hits="3" branch="false"/>
+            <line number="2" hits="3" branch="false"/>
+            <line number="11" hits="3" branch="false"/>
+            <line number="12" hits="3" branch="false"/>
+            <line number="21" hits="3" branch="false"/>
+            <line number="22" hits="2" branch="false"/>
+            <line number="27" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="28" hits="0" branch="false"/>
+            <line number="31" hits="2" branch="false"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

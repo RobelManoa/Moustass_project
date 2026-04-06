@@ -8,6 +8,11 @@ export const login = asyncHandler(async (request: Request, response: Response) =
 });
 
 export const me = asyncHandler(async (request: Request, response: Response) => {
-  const user = await authService.me(request.auth!.userId);
+  // Protection explicite contre le cas où auth n'est pas défini
+  if (!request.auth?.userId) {
+    throw new Error('Authentication required');
+  }
+
+  const user = await authService.me(request.auth.userId);
   response.json({ user });
 });
