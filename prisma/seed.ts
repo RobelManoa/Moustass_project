@@ -1,8 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { PrismaClient, Role } from '@prisma/client';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { env } from '../src/config/env';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaMariaDb(env.DATABASE_URL);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const adminEmail = env.BOOTSTRAP_ADMIN_EMAIL;
