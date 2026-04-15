@@ -6,7 +6,7 @@ import { badRequest, notFound } from '../../shared/http-errors';
 export function toPublicUser(user: {
   id: string;
   email: string;
-  name: string;
+  name: string | null;
   role: Role;
   createdAt: Date;
   updatedAt: Date;
@@ -14,7 +14,7 @@ export function toPublicUser(user: {
   return {
     id: user.id,
     email: user.email,
-    name: user.name,
+    name: user.name ?? "",
     role: user.role,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
