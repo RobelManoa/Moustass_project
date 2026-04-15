@@ -53,7 +53,7 @@ if (enabledModules.includes('user')) {
   app.use('/users', authenticate, requireRole('ADMIN'), userRoutes);
 }
 
-// Messages / Video
+// Messages / Video (protégé USER)
 if (enabledModules.includes('video') || enabledModules.includes('messages')) {
   app.use('/messages', authenticate, videoRoutes);
 }
