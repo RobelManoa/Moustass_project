@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="397" lines-covered="267" line-rate="0.6725" branches-valid="108" branches-covered="27" branch-rate="0.25" timestamp="1776282372541" complexity="0" version="0.1">
+<coverage lines-valid="394" lines-covered="284" line-rate="0.7208" branches-valid="108" branches-covered="34" branch-rate="0.3148" timestamp="1776286274899" complexity="0" version="0.1">
   <sources>
     <source>/media/robel/53e1aedc-bbb8-444c-ac36-5f9472e1cb341/projets/projet-IAC/backend_moustass</source>
   </sources>
@@ -69,12 +69,12 @@
           <methods>
           </methods>
           <lines>
-            <line number="1" hits="8" branch="false"/>
-            <line number="2" hits="8" branch="false"/>
-            <line number="4" hits="8" branch="false"/>
-            <line number="7" hits="8" branch="false"/>
-            <line number="9" hits="8" branch="false"/>
-            <line number="47" hits="8" branch="false"/>
+            <line number="1" hits="9" branch="false"/>
+            <line number="2" hits="9" branch="false"/>
+            <line number="4" hits="9" branch="false"/>
+            <line number="7" hits="9" branch="false"/>
+            <line number="9" hits="9" branch="false"/>
+            <line number="47" hits="9" branch="false"/>
           </lines>
         </class>
       </classes>
@@ -85,11 +85,11 @@
           <methods>
           </methods>
           <lines>
-            <line number="1" hits="7" branch="false"/>
-            <line number="2" hits="7" branch="false"/>
-            <line number="4" hits="7" branch="false"/>
-            <line number="6" hits="7" branch="false"/>
-            <line number="8" hits="7" branch="false"/>
+            <line number="1" hits="8" branch="false"/>
+            <line number="2" hits="8" branch="false"/>
+            <line number="4" hits="8" branch="false"/>
+            <line number="6" hits="8" branch="false"/>
+            <line number="8" hits="8" branch="false"/>
           </lines>
         </class>
       </classes>
@@ -215,37 +215,96 @@
         </class>
       </classes>
     </package>
-    <package name="src.modules.crypto" line-rate="1" branch-rate="1">
+    <package name="src.modules.crypto" line-rate="0.909" branch-rate="0.875">
       <classes>
-        <class name="crypto.service.ts" filename="src/modules/crypto/crypto.service.ts" line-rate="1" branch-rate="1">
+        <class name="crypto.schemas.ts" filename="src/modules/crypto/crypto.schemas.ts" line-rate="1" branch-rate="1">
           <methods>
-            <method name="(anonymous_0)" hits="1" signature="()V">
+          </methods>
+          <lines>
+            <line number="1" hits="1" branch="false"/>
+            <line number="3" hits="1" branch="false"/>
+            <line number="16" hits="1" branch="false"/>
+          </lines>
+        </class>
+        <class name="crypto.service.ts" filename="src/modules/crypto/crypto.service.ts" line-rate="0.9" branch-rate="0.875">
+          <methods>
+            <method name="sha256" hits="1" signature="()V">
               <lines>
-                <line number="2" hits="1"/>
+                <line number="21" hits="1"/>
               </lines>
             </method>
-            <method name="(anonymous_1)" hits="1" signature="()V">
+            <method name="buildMessageManifest" hits="3" signature="()V">
               <lines>
-                <line number="3" hits="1"/>
+                <line number="27" hits="3"/>
               </lines>
             </method>
-            <method name="(anonymous_2)" hits="1" signature="()V">
+            <method name="loadKeys" hits="5" signature="()V">
               <lines>
-                <line number="4" hits="1"/>
+                <line number="39" hits="5"/>
               </lines>
             </method>
-            <method name="(anonymous_3)" hits="1" signature="()V">
+            <method name="getPrivateKey" hits="2" signature="()V">
               <lines>
-                <line number="5" hits="1"/>
+                <line number="50" hits="2"/>
+              </lines>
+            </method>
+            <method name="getPublicKey" hits="3" signature="()V">
+              <lines>
+                <line number="55" hits="3"/>
+              </lines>
+            </method>
+            <method name="signManifest" hits="2" signature="()V">
+              <lines>
+                <line number="62" hits="2"/>
+              </lines>
+            </method>
+            <method name="(anonymous_6)" hits="46" signature="()V">
+              <lines>
+                <line number="64" hits="46"/>
+              </lines>
+            </method>
+            <method name="verifyManifest" hits="3" signature="()V">
+              <lines>
+                <line number="79" hits="3"/>
+              </lines>
+            </method>
+            <method name="(anonymous_8)" hits="69" signature="()V">
+              <lines>
+                <line number="82" hits="69"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="1" hits="5" branch="false"/>
+            <line number="1" hits="6" branch="false"/>
             <line number="2" hits="6" branch="false"/>
-            <line number="3" hits="6" branch="false"/>
-            <line number="4" hits="6" branch="false"/>
-            <line number="5" hits="6" branch="false"/>
+            <line number="21" hits="6" branch="false"/>
+            <line number="22" hits="1" branch="false"/>
+            <line number="27" hits="6" branch="false"/>
+            <line number="28" hits="3" branch="false"/>
+            <line number="36" hits="6" branch="false"/>
+            <line number="37" hits="6" branch="false"/>
+            <line number="40" hits="5" branch="true" condition-coverage="100% (4/4)"/>
+            <line number="42" hits="1" branch="true" condition-coverage="75% (3/4)"/>
+            <line number="43" hits="0" branch="false"/>
+            <line number="46" hits="1" branch="false"/>
+            <line number="47" hits="1" branch="false"/>
+            <line number="51" hits="2" branch="false"/>
+            <line number="52" hits="2" branch="false"/>
+            <line number="56" hits="3" branch="false"/>
+            <line number="57" hits="3" branch="false"/>
+            <line number="62" hits="6" branch="false"/>
+            <line number="63" hits="2" branch="false"/>
+            <line number="64" hits="46" branch="false"/>
+            <line number="66" hits="2" branch="false"/>
+            <line number="76" hits="2" branch="false"/>
+            <line number="79" hits="6" branch="false"/>
+            <line number="80" hits="3" branch="false"/>
+            <line number="81" hits="3" branch="false"/>
+            <line number="82" hits="69" branch="false"/>
+            <line number="83" hits="3" branch="false"/>
+            <line number="85" hits="3" branch="false"/>
+            <line number="96" hits="0" branch="false"/>
+            <line number="97" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>
@@ -635,22 +694,22 @@
             </method>
             <method name="openMessageStream" hits="0" signature="()V">
               <lines>
-                <line number="83" hits="0"/>
+                <line number="82" hits="0"/>
               </lines>
             </method>
             <method name="removeMessage" hits="0" signature="()V">
               <lines>
-                <line number="102" hits="0"/>
+                <line number="101" hits="0"/>
               </lines>
             </method>
             <method name="(anonymous_6)" hits="0" signature="()V">
               <lines>
-                <line number="113" hits="0"/>
+                <line number="112" hits="0"/>
               </lines>
             </method>
             <method name="createMessageReadStream" hits="0" signature="()V">
               <lines>
-                <line number="130" hits="0"/>
+                <line number="129" hits="0"/>
               </lines>
             </method>
           </methods>
@@ -676,33 +735,33 @@
             <line number="36" hits="1" branch="false"/>
             <line number="38" hits="1" branch="false"/>
             <line number="40" hits="1" branch="false"/>
-            <line number="53" hits="1" branch="false"/>
-            <line number="55" hits="1" branch="false"/>
-            <line number="57" hits="1" branch="false"/>
-            <line number="72" hits="1" branch="false"/>
-            <line number="80" hits="1" branch="false"/>
-            <line number="83" hits="5" branch="false"/>
-            <line number="84" hits="0" branch="false"/>
-            <line number="86" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="87" hits="0" branch="false"/>
-            <line number="90" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="91" hits="0" branch="false"/>
-            <line number="94" hits="0" branch="false"/>
-            <line number="95" hits="0" branch="true" condition-coverage="0% (0/2)"/>
-            <line number="96" hits="0" branch="false"/>
-            <line number="99" hits="0" branch="false"/>
-            <line number="102" hits="5" branch="false"/>
-            <line number="103" hits="0" branch="false"/>
-            <line number="105" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="106" hits="0" branch="false"/>
-            <line number="109" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="110" hits="0" branch="false"/>
-            <line number="113" hits="0" branch="false"/>
-            <line number="115" hits="0" branch="false"/>
-            <line number="120" hits="0" branch="false"/>
-            <line number="127" hits="0" branch="false"/>
-            <line number="130" hits="5" branch="false"/>
-            <line number="131" hits="0" branch="false"/>
+            <line number="52" hits="1" branch="false"/>
+            <line number="54" hits="1" branch="false"/>
+            <line number="56" hits="1" branch="false"/>
+            <line number="71" hits="1" branch="false"/>
+            <line number="79" hits="1" branch="false"/>
+            <line number="82" hits="5" branch="false"/>
+            <line number="83" hits="0" branch="false"/>
+            <line number="85" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="86" hits="0" branch="false"/>
+            <line number="89" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="90" hits="0" branch="false"/>
+            <line number="93" hits="0" branch="false"/>
+            <line number="94" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+            <line number="95" hits="0" branch="false"/>
+            <line number="98" hits="0" branch="false"/>
+            <line number="101" hits="5" branch="false"/>
+            <line number="102" hits="0" branch="false"/>
+            <line number="104" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="105" hits="0" branch="false"/>
+            <line number="108" hits="0" branch="true" condition-coverage="0% (0/4)"/>
+            <line number="109" hits="0" branch="false"/>
+            <line number="112" hits="0" branch="false"/>
+            <line number="114" hits="0" branch="false"/>
+            <line number="119" hits="0" branch="false"/>
+            <line number="126" hits="0" branch="false"/>
+            <line number="129" hits="5" branch="false"/>
+            <line number="130" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>
@@ -878,75 +937,8 @@
         </class>
       </classes>
     </package>
-    <package name="src.shared.security" line-rate="0.4" branch-rate="0.1">
+    <package name="src.shared.security" line-rate="0.8887999999999999" branch-rate="0.5">
       <classes>
-        <class name="crypto.ts" filename="src/shared/security/crypto.ts" line-rate="0.258" branch-rate="0">
-          <methods>
-            <method name="getKeyPair" hits="0" signature="()V">
-              <lines>
-                <line number="27" hits="0"/>
-              </lines>
-            </method>
-            <method name="sha256" hits="0" signature="()V">
-              <lines>
-                <line number="50" hits="0"/>
-              </lines>
-            </method>
-            <method name="buildMessageManifest" hits="0" signature="()V">
-              <lines>
-                <line number="54" hits="0"/>
-              </lines>
-            </method>
-            <method name="stringifyManifest" hits="0" signature="()V">
-              <lines>
-                <line number="61" hits="0"/>
-              </lines>
-            </method>
-            <method name="signManifest" hits="0" signature="()V">
-              <lines>
-                <line number="77" hits="0"/>
-              </lines>
-            </method>
-            <method name="verifyManifest" hits="0" signature="()V">
-              <lines>
-                <line number="93" hits="0"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="1" hits="5" branch="false"/>
-            <line number="8" hits="5" branch="false"/>
-            <line number="24" hits="5" branch="false"/>
-            <line number="25" hits="5" branch="false"/>
-            <line number="28" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="29" hits="0" branch="false"/>
-            <line number="32" hits="0" branch="true" condition-coverage="0% (0/4)"/>
-            <line number="33" hits="0" branch="false"/>
-            <line number="34" hits="0" branch="false"/>
-            <line number="35" hits="0" branch="false"/>
-            <line number="38" hits="0" branch="false"/>
-            <line number="44" hits="0" branch="false"/>
-            <line number="45" hits="0" branch="false"/>
-            <line number="47" hits="0" branch="false"/>
-            <line number="50" hits="5" branch="false"/>
-            <line number="51" hits="0" branch="false"/>
-            <line number="54" hits="5" branch="false"/>
-            <line number="55" hits="0" branch="false"/>
-            <line number="62" hits="0" branch="false"/>
-            <line number="77" hits="5" branch="false"/>
-            <line number="78" hits="0" branch="false"/>
-            <line number="79" hits="0" branch="false"/>
-            <line number="80" hits="0" branch="false"/>
-            <line number="81" hits="0" branch="false"/>
-            <line number="83" hits="0" branch="false"/>
-            <line number="93" hits="5" branch="false"/>
-            <line number="94" hits="0" branch="false"/>
-            <line number="95" hits="0" branch="false"/>
-            <line number="96" hits="0" branch="false"/>
-            <line number="97" hits="0" branch="false"/>
-            <line number="99" hits="0" branch="false"/>
-          </lines>
-        </class>
         <class name="jwt.ts" filename="src/shared/security/jwt.ts" line-rate="0.8887999999999999" branch-rate="0.5">
           <methods>
             <method name="signAuthToken" hits="3" signature="()V">

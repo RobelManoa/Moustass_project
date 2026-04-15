@@ -14,7 +14,7 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "test": "jest",
-    "test:ci": "jest --ci --coverage --runInBand --coverageReporters=lcov,cobertura,text",
+    "test:ci": "jest --ci --coverage --runInBand",
     "test:unit": "jest --testPathPattern=unit",
     "test:integration": "jest --testPathPattern=integration",
     "test:e2e": "jest --testPathPattern=e2e",

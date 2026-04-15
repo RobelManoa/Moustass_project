@@ -12,7 +12,7 @@ Le backend est un monolithe modulaire base sur:
 - Crypto SHA-256 + RSA-PSS
 - CI/CD GitHub Actions avec SonarQube et Snyk
 
-## 2. Etat actuel (15/04/2026)
+## 2. Etat actuel (16/04/2026)
 
 Validation executee localement sur le backend:
 
@@ -24,10 +24,14 @@ Validation executee localement sur le backend:
 
 Resultat tests actuel:
 
-- 3 suites passees
-- 9 tests passes
-- Couverture globale: Statements 58.8%, Branches 17.85%, Functions 25%, Lines 58.54%
-- Seuils coverage respectes (`branches: 15`, `functions: 25`, `lines: 20`, `statements: 20`)
+- 6 suites passees
+- 16 tests passes
+- Les tests `auth` et `video` sont couverts (unit, integration, e2e)
+
+Point de vigilance actuel:
+
+- Le script `test:ci` dans `package.json` affiche un warning sur `--coverageReporters=lcov,cobertura,text` (format non ideal).
+- Les tests passent, mais il faut stabiliser ce point pour fiabiliser les rapports de couverture en CI.
 
 ## 3. Arborescence backend
 
@@ -178,8 +182,8 @@ Services demarres:
 
 Par defaut en Docker local:
 
-- `ENABLED_MODULES=auth,user`
-- Les routes `video/messages` et `license` ne sont pas montees tant que les modules ne sont pas ajoutes.
+- `ENABLED_MODULES=auth,user,video,license`
+- Les routes `users`, `messages` et `license` sont disponibles (avec authentification/role selon endpoint).
 
 ## 10. Endpoints backend
 
@@ -257,14 +261,12 @@ Jobs:
 2. `sonarqube`
 - Scan Sonar via `SonarSource/sonarqube-scan-action@v6`
 - Secret requis: `SONAR_TOKEN`
+- Telechargement des artefacts de couverture avant scan
 
-3. `snyk`
-- Install CLI Snyk
-- `snyk test --all-projects --severity-threshold=high`
-- `snyk code test --severity-threshold=high`
-- `snyk monitor --all-projects` sur push branche `backend`
-- Secret requis: `SNYK_TOKEN`
-- La job Snyk est conditionnelle: elle est skip si `SNYK_TOKEN` est absent
+Etat actuel CI/CD:
+
+- Le workflow contient actuellement `quality` + `sonarqube`.
+- La job `snyk` n est plus presente dans le fichier workflow actuel et doit etre reintroduite pour retrouver la cible initiale (SonarQube + Snyk).
 
 ## 13. Secrets GitHub a configurer
 
@@ -317,3 +319,19 @@ curl -s -X POST http://localhost:3001/auth/login \
 curl -i http://localhost:3001/users \
   -H "Authorization: Bearer <TOKEN>"
 ```
+
+## 16. Avancement vs demande initiale
+
+Objectif initial du projet backend:
+
+- Authentification/autorisation securisee: `EN COURS AVANCE` (auth JWT + RBAC operationnels)
+- Gestion utilisateurs: `EN COURS AVANCE` (routes et controles presents)
+- Messagerie video securisee (hash/signature): `EN COURS AVANCE` (service video actif + tests ajoutes)
+- Qualite et verification (tests): `EN PROGRESSION` (16 tests passent)
+- CI/CD securisee avec SonarQube et Snyk: `PARTIEL`
+
+Ecarts restants prioritaires:
+
+1. Reajouter la job `snyk` dans `.github/workflows/build.yml` pour avoir les deux scans requis.
+2. Corriger le flag `--coverageReporters` du script `test:ci` pour eliminer le warning de generation de rapports.
+3. Continuer l augmentation de couverture sur les modules `video`, `user`, `license`.

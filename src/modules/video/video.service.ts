@@ -38,16 +38,15 @@ export async function uploadMessage(input: {
   const mediaSha256 = sha256(input.file.buffer);
 
   const manifest = buildMessageManifest({
-    id: messageId,
-    clientName: env.CLIENT_NAME,
-    ownerId: input.actor.userId,
-    title: input.title,
-    description: input.description ?? null,
-    originalFileName: input.file.originalname,
-    mimeType: input.file.mimetype,
-    size: input.file.size,
-    mediaSha256,
-    uploadedAt: new Date().toISOString(),
+  id: messageId,
+  clientName: env.CLIENT_NAME,
+  ownerId: input.actor.userId,
+  title: input.title,
+  description: input.description ?? null,
+  originalFileName: input.file.originalname,
+  mimeType: input.file.mimetype,
+  size: input.file.size,
+  mediaSha256,
   });
 
   const mediaSignature = signManifest(manifest);
