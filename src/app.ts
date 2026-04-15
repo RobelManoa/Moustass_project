@@ -16,7 +16,12 @@ import { authenticate, requireRole } from './shared/middleware/authenticate';
 export const app = express();
 
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy:
+      env.NODE_ENV === 'development' ? { policy: 'cross-origin' } : { policy: 'same-origin' },
+  })
+);
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));

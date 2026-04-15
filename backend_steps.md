@@ -12,7 +12,24 @@ Le backend est un monolithe modulaire base sur:
 - Crypto SHA-256 + RSA-PSS
 - CI/CD GitHub Actions avec SonarQube et Snyk
 
-## 2. Arborescence backend
+## 2. Etat actuel (15/04/2026)
+
+Validation executee localement sur le backend:
+
+- `npm ci` OK
+- `npm run prisma:generate` OK
+- `npm run typecheck` OK
+- `npm run test:ci` OK
+- `npm run build` OK
+
+Resultat tests actuel:
+
+- 3 suites passees
+- 9 tests passes
+- Couverture globale: Statements 58.8%, Branches 17.85%, Functions 25%, Lines 58.54%
+- Seuils coverage respectes (`branches: 15`, `functions: 25`, `lines: 20`, `statements: 20`)
+
+## 3. Arborescence backend
 
 Le backend est organise autour des dossiers suivants:
 
@@ -28,14 +45,14 @@ Le backend est organise autour des dossiers suivants:
 - `src/infrastructure`: acces Prisma
 - `prisma`: schema et seed
 
-## 3. Prerequis
+## 4. Prerequis
 
-- Node.js 22+
-- npm 10+
-- MySQL 8+
-- Docker + Docker Compose (optionnel)
+ - Node.js 22+
+ - npm 10+
+ - MySQL 8+
+ - Docker + Docker Compose (optionnel)
 
-## 4. Variables d environnement
+## 5. Variables d environnement
 
 Le backend lit ses variables via `src/config/env.ts`.
 
@@ -49,6 +66,7 @@ Variables necessaires:
 - `JWT_SECRET` (defaut dev, a surcharger en prod)
 - `JWT_ISSUER`
 - `JWT_AUDIENCE`
+- `ENABLED_MODULES` (defaut: `auth,user,video,license`)
 - `UPLOAD_DIR` (defaut: storage/messages)
 - `OIDC_ISSUER` (optionnel)
 - `OIDC_CLIENT_ID` (optionnel)
@@ -74,9 +92,15 @@ UPLOAD_DIR=storage/messages
 BOOTSTRAP_ADMIN_EMAIL=admin@client.local
 BOOTSTRAP_ADMIN_PASSWORD=ChangeMe123!
 BOOTSTRAP_ADMIN_NAME=Admin
+ENABLED_MODULES=auth,user,video,license
 ```
 
-## 5. Installation locale
+Notes importantes:
+
+- En Prisma 7, `prisma.config.ts` utilise une valeur de repli pour `DATABASE_URL` si la variable n est pas definie, ce qui evite les echec CI au `prisma generate`.
+- Le runtime applicatif reste strict: `src/config/env.ts` exige `DATABASE_URL` pour lancer le backend.
+
+## 6. Installation locale
 
 Depuis la racine du repository:
 
@@ -85,7 +109,7 @@ npm ci
 npm run prisma:generate
 ```
 
-## 6. Base de donnees (Prisma)
+## 7. Base de donnees (Prisma)
 
 Le schema Prisma se trouve dans `prisma/schema.prisma`.
 
@@ -100,7 +124,7 @@ Notes:
 - Le seed cree/met a jour un admin bootstrap.
 - Le client Prisma est aussi genere automatiquement via `postinstall`.
 
-## 7. Demarrage backend
+## 8. Demarrage backend
 
 Mode developpement:
 
@@ -136,7 +160,7 @@ Reponse:
 }
 ```
 
-## 8. Execution via Docker
+## 9. Execution via Docker
 
 Le projet fournit:
 - `Dockerfile`
@@ -149,10 +173,15 @@ docker compose up --build
 ```
 
 Services demarres:
-- MySQL (`3306`)
-- Backend (`3000`)
+- MySQL expose sur l hote: `3307` (conteneur `3306`)
+- Backend expose sur l hote: `3001`
 
-## 9. Endpoints backend
+Par defaut en Docker local:
+
+- `ENABLED_MODULES=auth,user`
+- Les routes `video/messages` et `license` ne sont pas montees tant que les modules ne sont pas ajoutes.
+
+## 10. Endpoints backend
 
 ### Auth
 - `POST /auth/login`
@@ -179,7 +208,13 @@ Services demarres:
 - `GET /health`
 - `GET /info`
 
-## 10. Securite appliquee
+Notes comportement:
+
+- `GET /users` exige un token JWT valide et role `ADMIN`.
+- Sans module `user` active, `/users` retourne `Route introuvable`.
+- Avec module `user` actif mais sans token, la reponse attendue est `401 Bearer token manquant`.
+
+## 11. Securite appliquee
 
 - Middleware `helmet` + `cors`
 - Rate limiting global
@@ -197,7 +232,11 @@ Services demarres:
   2. verification signature
   3. stream du fichier
 
-## 11. CI/CD GitHub Actions
+Note navigateur/dev:
+
+- En environnement `development`, la policy `Cross-Origin-Resource-Policy` est assouplie pour eviter le blocage de ressources comme `favicon.ico`.
+
+## 12. CI/CD GitHub Actions
 
 Le workflow est defini dans `.github/workflows/build.yml`.
 
@@ -211,8 +250,9 @@ Jobs:
 - `npm ci`
 - `npm run prisma:generate`
 - `npm run typecheck`
-- `npm test`
+- `npm run test:ci`
 - `npm run build`
+- upload des rapports coverage (`lcov.info`, `cobertura-coverage.xml`)
 
 2. `sonarqube`
 - Scan Sonar via `SonarSource/sonarqube-scan-action@v6`
@@ -224,8 +264,9 @@ Jobs:
 - `snyk code test --severity-threshold=high`
 - `snyk monitor --all-projects` sur push branche `backend`
 - Secret requis: `SNYK_TOKEN`
+- La job Snyk est conditionnelle: elle est skip si `SNYK_TOKEN` est absent
 
-## 12. Secrets GitHub a configurer
+## 13. Secrets GitHub a configurer
 
 Dans GitHub > Settings > Secrets and variables > Actions:
 
@@ -234,7 +275,7 @@ Dans GitHub > Settings > Secrets and variables > Actions:
 
 Si SonarQube self-hosted est utilise, verifier aussi la config scanner selon l environnement.
 
-## 13. Checklist rapide
+## 14. Checklist rapide
 
 - [ ] `.env` configure
 - [ ] MySQL accessible
@@ -245,3 +286,34 @@ Si SonarQube self-hosted est utilise, verifier aussi la config scanner selon l e
 - [ ] backend demarre sur `/health`
 - [ ] workflow GitHub Actions actif
 - [ ] secrets `SONAR_TOKEN` et `SNYK_TOKEN` definis
+
+## 15. Tests API manuels (recommande)
+
+1. Health check:
+
+```bash
+curl -i http://localhost:3001/health
+```
+
+2. Verification route users (module charge):
+
+```bash
+curl -i http://localhost:3001/users
+```
+
+Attendu sans token: `401` (pas `404`).
+
+3. Login admin bootstrap:
+
+```bash
+curl -s -X POST http://localhost:3001/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@client.local","password":"ChangeMe123!"}'
+```
+
+4. Liste users avec token:
+
+```bash
+curl -i http://localhost:3001/users \
+  -H "Authorization: Bearer <TOKEN>"
+```
