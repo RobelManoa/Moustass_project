@@ -10,7 +10,7 @@ import { badRequest, forbidden, notFound } from '../../shared/http-errors';
 import { recordAudit } from '../audit/audit.service';
 import { buildMessageManifest, sha256, signManifest, verifyManifest, type MessageManifest } from '../crypto/crypto.service';
 import { getMessageById } from '../metadata/metadata.service';
-import { JwtClaims } from '../../shared/security/jwt';   // ← Correction importante
+import { JwtClaims } from '../../shared/security/jwt';
 
 function getStorageRoot() {
   return path.resolve(process.cwd(), env.UPLOAD_DIR);
@@ -21,14 +21,12 @@ function sanitizeFileName(fileName: string) {
 }
 
 export async function uploadMessage(input: {
-  actor: JwtClaims;                    // déjà bon
+  actor: JwtClaims;
   file: Express.Multer.File;
   title: string;
   description?: string;
 }) {
-  if (!input.file) {
-    throw badRequest('Fichier vidéo manquant');
-  }
+  if (!input.file) throw badRequest('Fichier vidéo manquant');
 
   const storageRoot = getStorageRoot();
   await mkdir(storageRoot, { recursive: true });
@@ -74,32 +72,28 @@ export async function uploadMessage(input: {
   await recordAudit({
     actorId: input.actor.userId,
     action: 'VIDEO_UPLOADED',
-    resource: 'message',
+    resource: 'video_message',
     resourceId: message.id,
-    metadata: { title: input.title, mediaSha256 },
+    metadata: { title: input.title, mediaSha256, size: input.file.size },
   });
 
   return message;
 }
 
-// ==================== CORRECTIONS ICI ====================
 export async function openMessageStream(id: string, actor: JwtClaims) {
   const message = await getMessageById(id);
 
   if (!message || message.deletedAt) {
-    throw notFound('Message introuvable');
+    throw notFound('Message introuvable ou supprimé');
   }
 
-  // Vérification des droits
   if (message.ownerId !== actor.userId && actor.role !== 'ADMIN') {
     throw forbidden('Accès refusé');
   }
 
   const manifest = message.manifestJson as unknown as MessageManifest;
-  const isSignatureValid = verifyManifest(manifest, message.mediaSignature);
-
-  if (!isSignatureValid) {
-    throw badRequest('Signature invalide pour ce message');
+  if (!verifyManifest(manifest, message.mediaSignature)) {
+    throw badRequest('Signature invalide – intégrité compromise');
   }
 
   return message;
@@ -109,15 +103,13 @@ export async function removeMessage(id: string, actor: JwtClaims) {
   const message = await getMessageById(id);
 
   if (!message || message.deletedAt) {
-    throw notFound('Message introuvable');
+    throw notFound('Message introuvable ou déjà supprimé');
   }
 
-  // Vérification des droits
   if (message.ownerId !== actor.userId && actor.role !== 'ADMIN') {
     throw forbidden('Accès refusé');
   }
 
-  // Suppression physique du fichier (on ignore l'erreur si le fichier n'existe plus)
   await unlink(message.storagePath).catch(() => undefined);
 
   await prisma.videoMessage.update({
@@ -128,7 +120,7 @@ export async function removeMessage(id: string, actor: JwtClaims) {
   await recordAudit({
     actorId: actor.userId,
     action: 'VIDEO_DELETED',
-    resource: 'message',
+    resource: 'video_message',
     resourceId: id,
   });
 
