@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { prisma } from '../../infrastructure/prisma';
 import { notFound } from '../../shared/http-errors';
 
@@ -10,16 +9,22 @@ export async function listLicenses() {
 
 export async function createLicense(input: {
   clientName: string;
-  status: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED';
-  expiresAt?: string | null;
-  payloadJson?: Record<string, unknown>;
+  serialNumber: string;
+  email?: string;
+  phone?: string;
+  logoUrl?: string;
+  maxUsers?: number;
+  expiresAt: string;        // format ISO string
 }) {
   return prisma.license.create({
     data: {
       clientName: input.clientName,
-      status: input.status,
-      expiresAt: input.expiresAt ? new Date(input.expiresAt) : null,
-      payloadJson: input.payloadJson as Prisma.InputJsonValue | undefined,
+      serialNumber: input.serialNumber,
+      email: input.email,
+      phone: input.phone,
+      logoUrl: input.logoUrl,
+      maxUsers: input.maxUsers,
+      expiresAt: new Date(input.expiresAt),
     },
   });
 }
@@ -28,13 +33,15 @@ export async function updateLicense(
   id: string,
   input: {
     clientName?: string;
-    status?: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED';
-    expiresAt?: string | null;
-    payloadJson?: Record<string, unknown>;
+    serialNumber?: string;
+    email?: string;
+    phone?: string;
+    logoUrl?: string;
+    maxUsers?: number;
+    expiresAt?: string;
   },
 ) {
   const license = await prisma.license.findUnique({ where: { id } });
-
   if (!license) {
     throw notFound('Licence introuvable');
   }
@@ -43,16 +50,19 @@ export async function updateLicense(
     where: { id },
     data: {
       clientName: input.clientName,
-      status: input.status,
-      expiresAt: input.expiresAt === undefined ? undefined : input.expiresAt ? new Date(input.expiresAt) : null,
-      payloadJson: input.payloadJson as Prisma.InputJsonValue | undefined,
+      serialNumber: input.serialNumber,
+      email: input.email,
+      phone: input.phone,
+      logoUrl: input.logoUrl,
+      maxUsers: input.maxUsers,
+      // On ne met à jour expiresAt que si une valeur est fournie
+      expiresAt: input.expiresAt ? new Date(input.expiresAt) : undefined,
     },
   });
 }
 
 export async function deleteLicense(id: string) {
   const license = await prisma.license.findUnique({ where: { id } });
-
   if (!license) {
     throw notFound('Licence introuvable');
   }
