@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="394" lines-covered="284" line-rate="0.7208" branches-valid="108" branches-covered="34" branch-rate="0.3148" timestamp="1776286274899" complexity="0" version="0.1">
+<coverage lines-valid="394" lines-covered="284" line-rate="0.7208" branches-valid="108" branches-covered="34" branch-rate="0.3148" timestamp="1776346244976" complexity="0" version="0.1">
   <sources>
     <source>/media/robel/53e1aedc-bbb8-444c-ac36-5f9472e1cb341/projets/projet-IAC/backend_moustass</source>
   </sources>
