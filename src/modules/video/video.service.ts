@@ -2,14 +2,12 @@ import { randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { Prisma } from '@prisma/client';
 
 import { env } from '../../config/env';
 import { prisma } from '../../infrastructure/prisma';
 import { badRequest, forbidden, notFound } from '../../shared/http-errors';
 import { recordAudit } from '../audit/audit.service';
 import { buildMessageManifest, sha256, signManifest, verifyManifest, type MessageManifest } from '../crypto/crypto.service';
-import { getMessageById } from '../metadata/metadata.service';
 import { JwtClaims } from '../../shared/security/jwt';
 
 function getStorageRoot() {
@@ -64,7 +62,7 @@ export async function uploadMessage(input: {
       storagePath,
       mediaSha256,
       mediaSignature,
-      manifestJson: manifest as unknown as Prisma.InputJsonValue,
+      manifestJson: manifest as any,
     },
   });
 
@@ -80,7 +78,7 @@ export async function uploadMessage(input: {
 }
 
 export async function openMessageStream(id: string, actor: JwtClaims) {
-  const message = await getMessageById(id);
+  const message = await prisma.videoMessage.findUnique({ where: { id } });
 
   if (!message || message.deletedAt) {
     throw notFound('Message introuvable ou supprimé');
@@ -99,7 +97,7 @@ export async function openMessageStream(id: string, actor: JwtClaims) {
 }
 
 export async function removeMessage(id: string, actor: JwtClaims) {
-  const message = await getMessageById(id);
+  const message = await prisma.videoMessage.findUnique({ where: { id } });
 
   if (!message || message.deletedAt) {
     throw notFound('Message introuvable ou déjà supprimé');
