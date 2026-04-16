@@ -1,0 +1,20 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user_sender, "Expéditeur")
+Person(user_receiver, "Destinataire")
+Person(admin, "Admin")
+
+System(svm, "SVM Platform", "Secure Video Messaging SaaS")
+
+System_Ext(idp, "OIDC Provider")
+System_Ext(smtp, "SMTP Service")
+
+Rel(user_sender, svm, "Envoie vidéo")
+Rel(user_receiver, svm, "Lit vidéo")
+Rel(admin, svm, "Administre")
+
+Rel(svm, idp, "Authentification")
+Rel(svm, smtp, "Notifications")
+
+@enduml

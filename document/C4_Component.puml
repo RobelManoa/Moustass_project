@@ -1,0 +1,38 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container(api, "Backend API", "Node.js") {
+
+  Component(authController, "AuthController")
+  Component(authService, "AuthService")
+
+  Component(userController, "UserController")
+  Component(userService, "UserService")
+
+  Component(messageController, "MessageController")
+  Component(messageService, "MessageService")
+
+  Component(cryptoService, "CryptoService")
+
+  Component(auditService, "AuditService")
+
+  Component(licenseController, "LicenseController")
+  Component(licenseService, "LicenseService")
+
+  Component(prisma, "Prisma Client")
+
+}
+
+Rel(authController, authService, "")
+Rel(userController, userService, "")
+Rel(messageController, messageService, "")
+Rel(licenseController, licenseService, "")
+
+Rel(messageService, cryptoService, "hash + signature")
+Rel(messageService, prisma, "CRUD messages")
+Rel(userService, prisma, "")
+Rel(licenseService, prisma, "")
+
+Rel(messageService, auditService, "log actions")
+
+@enduml

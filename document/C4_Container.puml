@@ -1,0 +1,29 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "Utilisateur")
+
+System_Boundary(svm, "SVM System") {
+
+Container(front, "Frontend Client", "React", "Interface utilisateur")
+Container(admin, "Admin Panel", "React-Admin", "Administration")
+
+Container(api, "Backend API", "Node.js", "API REST sécurisée")
+
+ContainerDb(db, "MySQL", "Database", "Métadonnées")
+
+Container(storage, "Object Storage", "S3/MinIO", "Stockage vidéos")
+
+}
+
+System_Ext(idp, "OIDC Provider")
+
+Rel(user, front, "Utilise")
+Rel(front, api, "API REST")
+Rel(admin, api, "API REST")
+
+Rel(api, db, "CRUD metadata")
+Rel(api, storage, "Stockage vidéo")
+Rel(api, idp, "Auth")
+
+@enduml
