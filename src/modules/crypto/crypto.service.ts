@@ -1,4 +1,4 @@
-import { createHash, createPrivateKey, createPublicKey, sign, verify } from 'node:crypto';
+import { createHash, createPrivateKey, createPublicKey, generateKeyPairSync, sign, verify } from 'node:crypto';
 import { env } from '../../config/env';
 
 // ====================== TYPES ======================
@@ -40,6 +40,19 @@ function loadKeys() {
   if (privateKey && publicKey) return;
 
   if (!env.CRYPTO_PRIVATE_KEY_PEM || !env.CRYPTO_PUBLIC_KEY_PEM) {
+    if (env.NODE_ENV !== 'production') {
+      const generatedKeyPair = generateKeyPairSync('rsa', {
+        modulusLength: 2048,
+        publicExponent: 0x10001,
+        privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+        publicKeyEncoding: { type: 'spki', format: 'pem' },
+      });
+
+      privateKey = Buffer.from(generatedKeyPair.privateKey, 'utf-8');
+      publicKey = Buffer.from(generatedKeyPair.publicKey, 'utf-8');
+      return;
+    }
+
     throw new Error('CRYPTO_PRIVATE_KEY_PEM and CRYPTO_PUBLIC_KEY_PEM must be defined in .env');
   }
 
