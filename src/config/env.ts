@@ -20,7 +20,7 @@ const envSchema = z.object({
   JWT_AUDIENCE: z.string().min(1).default('moustass-client'),
 
   // ← AJOUTÉ pour le chargement conditionnel des modules
-  ENABLED_MODULES: z.string().default('auth,user,video,license'),
+  ENABLED_MODULES: z.string().default('auth,user,video,license,metadata,crypto'),
 
   // Chemins et stockage
   UPLOAD_DIR: z.string().min(1).default('storage/messages'),
