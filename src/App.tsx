@@ -1,25 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource } from "react-admin";
+import simpleRestProvider from "ra-data-simple-rest";
+
+import { UserList } from "./users";
+import { LicenseList } from "./licenses";
+
+const dataProvider = simpleRestProvider("http://localhost:3001");
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Admin dataProvider={dataProvider}>
+      <Resource name="users" list={UserList} />
+      <Resource name="license" list={LicenseList} />
+    </Admin>
   );
 }
 
