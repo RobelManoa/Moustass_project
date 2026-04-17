@@ -39,27 +39,29 @@ app.get('/info', (_req, res) => {
 });
 
 // ====================== Routes conditionnelles ======================
-const enabledModules = (env.ENABLED_MODULES || 'auth,user,video,license')
-  .split(',')
-  .map((m: string) => m.trim().toLowerCase());
+const enabledModules = new Set(
+  (env.ENABLED_MODULES || 'auth,user,video,license,metadata,crypto')
+    .split(',')
+    .map((m: string) => m.trim().toLowerCase())
+);
 
 // Auth (toujours activé par défaut)
-if (enabledModules.includes('auth')) {
+if (enabledModules.has('auth')) {
   app.use('/auth', authRoutes);
 }
 
 // Users (protégé ADMIN)
-if (enabledModules.includes('user')) {
+if (enabledModules.has('user')) {
   app.use('/users', authenticate, requireRole('ADMIN'), userRoutes);
 }
 
 // Messages / Video (protégé USER)
-if (enabledModules.includes('video') || enabledModules.includes('messages')) {
+if (enabledModules.has('video') || enabledModules.has('messages')) {
   app.use('/messages', authenticate, videoRoutes);
 }
 
 // License (protégé ADMIN)
-if (enabledModules.includes('license')) {
+if (enabledModules.has('license')) {
   app.use('/license', authenticate, requireRole('ADMIN'), licenseRoutes);
 }
 

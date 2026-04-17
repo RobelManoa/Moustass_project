@@ -30,12 +30,14 @@ describe('Crypto Module - Tests Unitaires', () => {
     id: '123e4567-e89b-12d3-a456-426614174000',
     clientName: 'Client A',
     ownerId: '987fcdeb-51a2-43e8-9c4f-123456789abc',
+    recipientId: '11111111-2222-3333-4444-555555555555',
     title: 'Message Vidéo Confidentiel',
     description: 'Test de signature',
     originalFileName: 'confidentiel.mp4',
     mimeType: 'video/mp4',
     size: 15432000,
     mediaSha256: 'a'.repeat(64), // 64 caractères hex
+    recordingDurationSeconds: 5,
   };
 
   let validManifest: any;

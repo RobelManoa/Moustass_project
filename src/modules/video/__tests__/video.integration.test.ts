@@ -19,7 +19,7 @@ describe('Video Controller - Integration Tests', () => {
     const req = {
       auth: mockActor,
       file: { originalname: 'video.mp4' },
-      body: { title: 'Test' },
+      body: { title: 'Test', recipientId: 'user-456' },
     } as unknown as Request;
 
     const res = {

@@ -53,6 +53,15 @@ export async function updateLicense(
     throw notFound('Licence introuvable');
   }
 
+  let expiresAtValue: Date | null | undefined;
+  if (input.expiresAt === null) {
+    expiresAtValue = null;
+  } else if (input.expiresAt) {
+    expiresAtValue = new Date(input.expiresAt);
+  } else {
+    expiresAtValue = undefined;
+  }
+
   return prisma.license.update({
     where: { id },
     data: {
@@ -64,12 +73,7 @@ export async function updateLicense(
       status: input.status,
       maxUsers: input.maxUsers,
       metadata: input.metadata,
-      expiresAt:
-        input.expiresAt === null
-          ? null
-          : input.expiresAt
-            ? new Date(input.expiresAt)
-            : undefined,
+      expiresAt: expiresAtValue,
     },
   });
 }
