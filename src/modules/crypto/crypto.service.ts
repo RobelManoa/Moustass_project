@@ -7,12 +7,14 @@ export interface MessageManifest {
   id: string;
   clientName: string;
   ownerId: string;
+  recipientId: string | null;
   title: string;
   description: string | null;
   originalFileName: string;
   mimeType: string;
   size: number;
   mediaSha256: string;
+  recordingDurationSeconds: number;
   uploadedAt: string;
 }
 

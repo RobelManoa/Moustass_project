@@ -1,8 +1,16 @@
 import type { Request, Response } from 'express';
 import { asyncHandler } from '../../shared/async-handler';
 import { badRequest } from '../../shared/http-errors';
-import { videoUploadSchema } from './video.schemas';
-import { createMessageReadStream, openMessageStream, removeMessage, uploadMessage } from './video.service';
+import { videoListQuerySchema, videoUploadSchema } from './video.schemas';
+import {
+  createMessageReadStream,
+  getMessageDetails,
+  listMessages,
+  listMessageRecipients,
+  openMessageStream,
+  removeMessage,
+  uploadMessage,
+} from './video.service';
 
 function getIdParam(request: Request) {
   const { id } = request.params;
@@ -20,11 +28,28 @@ export const upload = asyncHandler(async (request: Request, response: Response) 
   const message = await uploadMessage({
     actor: request.auth!,
     file: request.file,
+    recipientId: body.recipientId,
     title: body.title,
     description: body.description,
   });
 
   response.status(201).json({ message });
+});
+
+export const list = asyncHandler(async (request: Request, response: Response) => {
+  const query = videoListQuerySchema.parse(request.query);
+  const result = await listMessages(request.auth!, query);
+  response.json(result);
+});
+
+export const recipients = asyncHandler(async (request: Request, response: Response) => {
+  const recipients = await listMessageRecipients(request.auth!);
+  response.json({ recipients });
+});
+
+export const details = asyncHandler(async (request: Request, response: Response) => {
+  const message = await getMessageDetails(getIdParam(request), request.auth!);
+  response.json({ message });
 });
 
 export const read = asyncHandler(async (request: Request, response: Response) => {
