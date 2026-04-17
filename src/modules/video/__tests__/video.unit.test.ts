@@ -13,9 +13,13 @@ jest.mock('../../audit/audit.service');
 // On mock Prisma avec des jest.fn() directement dans le factory
 jest.mock('../../../infrastructure/prisma', () => ({
   prisma: {
+    user: {
+      findUnique: jest.fn(),
+    },
     videoMessage: {
       create: jest.fn(),
       update: jest.fn(),
+      findUniqueOrThrow: jest.fn(),
     },
   },
 }));
@@ -43,12 +47,14 @@ describe('Video Service - Unit Tests', () => {
     id: 'msg-123',
     clientName: 'Test Client',
     ownerId: 'user-123',
+    recipientId: 'user-456',
     title: 'Test Video',
     description: 'Test Description',
     originalFileName: 'video.mp4',
     mimeType: 'video/mp4',
     size: 5000000,
     mediaSha256: 'hash123',
+    recordingDurationSeconds: 5,
     uploadedAt: new Date().toISOString(),
   };
 
@@ -73,14 +79,32 @@ describe('Video Service - Unit Tests', () => {
     (auditService.recordAudit as jest.Mock).mockResolvedValue(undefined);
 
     // Mock Prisma
+    prisma.user.findUnique.mockResolvedValue({ id: 'user-456' });
     prisma.videoMessage.create.mockResolvedValue({
       id: 'msg-123',
       title: 'Test Video',
+    });
+    prisma.videoMessage.findUniqueOrThrow.mockResolvedValue({
+      id: 'msg-123',
+      ownerId: 'user-123',
+      recipientId: 'user-456',
+      title: 'Test Video',
+      description: 'Test Description',
+      originalFileName: 'video.mp4',
+      mimeType: 'video/mp4',
+      mediaSha256: 'hash123',
+      mediaSignature: 'sig123',
+      manifestJson: mockManifest,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      owner: { id: 'user-123', email: 'user@test.local', name: 'User', role: 'USER' },
+      recipient: { id: 'user-456', email: 'target@test.local', name: 'Target', role: 'USER' },
     });
 
     const result = await videoService.uploadMessage({
       actor: mockActor,
       file: mockFile,
+      recipientId: 'user-456',
       title: 'Test Video',
       description: 'Test Description',
     });
@@ -94,6 +118,7 @@ describe('Video Service - Unit Tests', () => {
       videoService.uploadMessage({
         actor: mockActor,
         file: null as any,
+        recipientId: 'user-456',
         title: 'Test Video',
       })
     ).rejects.toThrow();

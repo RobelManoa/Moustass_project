@@ -38,7 +38,7 @@ model VideoMessage {
   mimeType          String
   storagePath       String
   mediaSha256       String
-  mediaSignature    String
+  mediaSignature    String   @db.Text
   manifestJson      Json
   deletedAt         DateTime?
   createdAt         DateTime @default(now())

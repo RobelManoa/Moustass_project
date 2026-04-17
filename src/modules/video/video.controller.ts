@@ -12,6 +12,14 @@ import {
   uploadMessage,
 } from './video.service';
 
+function getAuth(request: Request) {
+  const auth = request.auth;
+  if (!auth) {
+    throw badRequest('Authentification requise');
+  }
+  return auth;
+}
+
 function getIdParam(request: Request) {
   const { id } = request.params;
   if (!id || Array.isArray(id)) {
@@ -26,7 +34,7 @@ export const upload = asyncHandler(async (request: Request, response: Response) 
   const body = videoUploadSchema.parse(request.body);
 
   const message = await uploadMessage({
-    actor: request.auth!,
+    actor: getAuth(request),
     file: request.file,
     recipientId: body.recipientId,
     title: body.title,
@@ -38,22 +46,22 @@ export const upload = asyncHandler(async (request: Request, response: Response) 
 
 export const list = asyncHandler(async (request: Request, response: Response) => {
   const query = videoListQuerySchema.parse(request.query);
-  const result = await listMessages(request.auth!, query);
+  const result = await listMessages(getAuth(request), query);
   response.json(result);
 });
 
 export const recipients = asyncHandler(async (request: Request, response: Response) => {
-  const recipients = await listMessageRecipients(request.auth!);
+  const recipients = await listMessageRecipients(getAuth(request));
   response.json({ recipients });
 });
 
 export const details = asyncHandler(async (request: Request, response: Response) => {
-  const message = await getMessageDetails(getIdParam(request), request.auth!);
+  const message = await getMessageDetails(getIdParam(request), getAuth(request));
   response.json({ message });
 });
 
 export const read = asyncHandler(async (request: Request, response: Response) => {
-  const message = await openMessageStream(getIdParam(request), request.auth!);
+  const message = await openMessageStream(getIdParam(request), getAuth(request));
 
   response.setHeader('Content-Type', message.mimeType);
   response.setHeader('Content-Disposition', `inline; filename="${message.originalFileName}"`);
@@ -61,6 +69,6 @@ export const read = asyncHandler(async (request: Request, response: Response) =>
 });
 
 export const remove = asyncHandler(async (request: Request, response: Response) => {
-  const result = await removeMessage(getIdParam(request), request.auth!);
+  const result = await removeMessage(getIdParam(request), getAuth(request));
   response.json(result);
 });
