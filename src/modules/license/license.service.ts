@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '../../infrastructure/prisma';
 import { notFound } from '../../shared/http-errors';
 
@@ -13,18 +14,22 @@ export async function createLicense(input: {
   email?: string;
   phone?: string;
   logoUrl?: string;
+  status?: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED';
   maxUsers?: number;
-  expiresAt: string;        // format ISO string
+  metadata?: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput;
+  expiresAt?: string | null;
 }) {
   return prisma.license.create({
     data: {
       clientName: input.clientName,
       serialNumber: input.serialNumber,
-      email: input.email,
-      phone: input.phone,
-      logoUrl: input.logoUrl,
+      email: input.email || null,
+      phone: input.phone || null,
+      logoUrl: input.logoUrl || null,
+      status: input.status,
       maxUsers: input.maxUsers,
-      expiresAt: new Date(input.expiresAt),
+      metadata: input.metadata,
+      expiresAt: input.expiresAt ? new Date(input.expiresAt) : null,
     },
   });
 }
@@ -37,8 +42,10 @@ export async function updateLicense(
     email?: string;
     phone?: string;
     logoUrl?: string;
+    status?: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED';
     maxUsers?: number;
-    expiresAt?: string;
+    metadata?: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput;
+    expiresAt?: string | null;
   },
 ) {
   const license = await prisma.license.findUnique({ where: { id } });
@@ -51,12 +58,18 @@ export async function updateLicense(
     data: {
       clientName: input.clientName,
       serialNumber: input.serialNumber,
-      email: input.email,
-      phone: input.phone,
-      logoUrl: input.logoUrl,
+      email: input.email === '' ? null : input.email,
+      phone: input.phone === '' ? null : input.phone,
+      logoUrl: input.logoUrl === '' ? null : input.logoUrl,
+      status: input.status,
       maxUsers: input.maxUsers,
-      // On ne met à jour expiresAt que si une valeur est fournie
-      expiresAt: input.expiresAt ? new Date(input.expiresAt) : undefined,
+      metadata: input.metadata,
+      expiresAt:
+        input.expiresAt === null
+          ? null
+          : input.expiresAt
+            ? new Date(input.expiresAt)
+            : undefined,
     },
   });
 }
