@@ -1,13 +1,178 @@
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(circle at top left, rgba(209, 122, 34, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(18, 60, 105, 0.16), transparent 32%),
+    linear-gradient(180deg, #f7f1e7 0%, #f2eee7 48%, #ece6da 100%);
+  color: #15202b;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.RaLayout-root {
+  background: transparent;
+}
+
+.brand-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-badge,
+.login-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fffaf2;
+  background: linear-gradient(135deg, #d17a22 0%, #123c69 100%);
+  box-shadow: 0 16px 28px rgba(18, 60, 105, 0.2);
+}
+
+.brand-title {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.brand-subtitle,
+.brand-user {
+  opacity: 0.88;
+}
+
+.dashboard-shell,
+.settings-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-hero {
+  padding: 28px;
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(18, 60, 105, 0.94), rgba(11, 37, 65, 0.94)),
+    linear-gradient(45deg, rgba(209, 122, 34, 0.18), rgba(255, 255, 255, 0));
+  color: #f8fbff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: end;
+  box-shadow: 0 24px 64px rgba(11, 37, 65, 0.18);
+}
+
+.hero-kicker,
+.login-kicker,
+.metric-label {
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.hero-title {
+  max-width: 640px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.hero-copy {
+  max-width: 620px;
+  opacity: 0.88;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.dashboard-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.admin-card {
+  border: 1px solid rgba(18, 60, 105, 0.08);
+}
+
+.metric-value {
+  margin: 6px 0 8px;
+}
+
+.login-card {
+  max-width: 520px;
+  width: min(92vw, 520px);
+  margin: 40px auto 0;
+  border-radius: 28px;
+  border: 1px solid rgba(18, 60, 105, 0.08);
+  overflow: hidden;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.login-title {
+  margin-top: 4px;
+}
+
+.login-copy {
+  color: #52606d;
+  margin-bottom: 18px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-submit {
+  margin-top: 8px;
+  min-height: 48px;
+}
+
+@media (max-width: 900px) {
+  .brand-user {
+    display: none;
+  }
+
+  .dashboard-hero {
+    padding: 22px;
+  }
 }
