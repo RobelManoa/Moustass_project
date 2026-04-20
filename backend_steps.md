@@ -2,246 +2,193 @@
 
 ## 1. Objectif
 
-Ce document decrit les etapes de mise en place, d execution et de verification de la partie backend du projet Moustass SVM.
+Ce document decrit l etat reel du backend au 20/04/2026:
+- ce qui est deja implemente
+- ce qui est partiel ou manquant
+- les prochaines etapes prioritaires
 
-Le backend est un monolithe modulaire base sur:
-- Node.js + Express
-- Prisma ORM
-- MySQL
-- JWT + RBAC
-- Crypto SHA-256 + RSA-PSS
-- CI/CD GitHub Actions avec SonarQube et Snyk
+Le constat est base sur la lecture du code source, des scripts npm, de Prisma, de Docker et du workflow CI.
 
-## 2. Arborescence backend
+## 2. Etat global (resume)
 
-Le backend est organise autour des dossiers suivants:
+- Architecture modulaire en place (auth, user, video, license, audit, crypto, metadata, notification)
+- API Express fonctionnelle avec securite de base (helmet, cors, rate limit, JWT, RBAC)
+- Persistence MySQL + Prisma en place
+- Flux principal video (upload, lecture, suppression) implemente
+- Pipeline CI present (quality + SonarQube + Snyk)
 
-- `src/modules/auth`: login et endpoint /auth/me
-- `src/modules/user`: gestion des utilisateurs
-- `src/modules/video`: upload, lecture, suppression des messages video
-- `src/modules/crypto`: hash, signature et verification
-- `src/modules/metadata`: acces metadonnees des messages
-- `src/modules/license`: gestion des licences client
-- `src/modules/audit`: journalisation des actions sensibles
-- `src/modules/notification`: placeholder notifications
-- `src/shared`: middlewares, erreurs, securite JWT/crypto
-- `src/infrastructure`: acces Prisma
-- `prisma`: schema et seed
+Points majeurs manquants:
+- Pas de vrais tests automatisees (script test placeholder)
+- OIDC (Open ID Connect) non implemente (variables presentes, logique absente)
+- Module notification encore placeholder
+- Pas de migrations Prisma versionnees dans le repo
+- Certaines capacites existent en service mais pas exposees en endpoint (ex: listing metadata messages)
 
-## 3. Prerequis
+## 3. Ce qui est deja la
 
+### 3.1 Socle backend
+
+- Runtime TypeScript Node.js
+- Serveur Express initialise dans `src/app.ts` et `src/server.ts`
+- Endpoints systeme operationnels:
+  - `GET /health`
+  - `GET /info`
+
+### 3.2 Configuration et environnement
+
+- Chargement env via `dotenv` + validation `zod` dans `src/config/env.ts`
+- Fichier exemple present: `.env.example`
+- Variables critiques presentes: `DATABASE_URL`, `JWT_*`, `UPLOAD_DIR`, bootstrap admin
+
+### 3.3 Base de donnees
+
+- Schema Prisma present: `prisma/schema.prisma`
+- Modeles cles presents: `User`, `VideoMessage`, `Audit`, `CryptoKey`, `License`
+- Seed present: `prisma/seed.ts` (upsert admin)
+- Prisma client genere via `postinstall`
+
+### 3.4 API metier exposee
+
+- Auth:
+  - `POST /auth/login`
+  - `GET /auth/me`
+- Users (ADMIN):
+  - `GET /users`
+  - `POST /users`
+  - `PUT /users/:id`
+  - `DELETE /users/:id`
+- Messages:
+  - `POST /messages/upload`
+  - `GET /messages/:id`
+  - `DELETE /messages/:id`
+- License (ADMIN):
+  - `GET /license`
+  - `POST /license`
+  - `PUT /license/:id`
+  - `DELETE /license/:id`
+
+### 3.5 Securite applicative
+
+- `helmet` + `cors`
+- Rate limit global
+- Validation Zod sur login/user/license
+- Auth JWT obligatoire sur routes protegees
+- RBAC (`USER`, `ADMIN`)
+- Hash SHA-256 + signature RSA-PSS du manifest media
+- Verification de signature a la lecture
+- Journalisation audit lors de l upload/suppression video
+
+### 3.6 Docker et CI
+
+- `Dockerfile` multi-stage present
+- `docker-compose.yml` present (mysql + backend)
+- Workflow GitHub Actions present: `.github/workflows/build.yml`
+  - Job quality: install, prisma generate, typecheck, test, build
+  - Job SonarQube
+  - Job Snyk (Open Source + Code + monitor)
+
+## 4. Ce qui manque ou reste partiel
+
+### 4.1 Tests
+
+Statut: MANQUANT
+
+- Aucun fichier `*.test.ts` ou `*.spec.ts` detecte
+- `npm test` est un placeholder (`No tests configured yet`)
+- Impact: quality gate CI peu pertinente sur la partie tests
+
+### 4.2 OIDC
+
+Statut: PARTIEL
+
+- Variables `OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET` presentes
+- Aucune logique OIDC detectee dans les modules auth
+- Impact: authentification feder ee non disponible
+
+### 4.3 Notification
+
+Statut: PARTIEL
+
+- `src/modules/notification/notification.service.ts` retourne un placeholder
+- Pas d integration SMTP/provider
+
+### 4.4 Metadata / listing messages
+
+Statut: PARTIEL
+
+- Service `listMessagesForActor` present dans metadata
+- Pas de route/controller expose pour lister les messages
+
+### 4.5 Prisma migrations
+
+Statut: MANQUANT DANS LE REPO
+
+- Dossier `prisma/migrations` absent
+- Le schema existe, mais l historique de migration n est pas versionne
+
+### 4.6 DevSecOps complet
+
+Statut: PARTIEL
+
+- Sonar + Snyk en place
+- OWASP ZAP non present dans le workflow backend actuel
+- IaC (Terraform/Ansible) non present dans ce repository backend
+
+## 5. Verification rapide locale
+
+Pre requis:
 - Node.js 22+
 - npm 10+
-- MySQL 8+
-- Docker + Docker Compose (optionnel)
+- MySQL 8+ (ou Docker)
 
-## 4. Variables d environnement
-
-Le backend lit ses variables via `src/config/env.ts`.
-
-Variables necessaires:
-
-- `DATABASE_URL` (obligatoire)
-- `PORT` (defaut: 3000)
-- `NODE_ENV` (development/test/production)
-- `CLIENT_NAME` (defaut: Client A)
-- `APP_VERSION` (defaut: 1.0.0)
-- `JWT_SECRET` (defaut dev, a surcharger en prod)
-- `JWT_ISSUER`
-- `JWT_AUDIENCE`
-- `UPLOAD_DIR` (defaut: storage/messages)
-- `OIDC_ISSUER` (optionnel)
-- `OIDC_CLIENT_ID` (optionnel)
-- `OIDC_CLIENT_SECRET` (optionnel)
-- `CRYPTO_PRIVATE_KEY_PEM` (optionnel)
-- `CRYPTO_PUBLIC_KEY_PEM` (optionnel)
-- `BOOTSTRAP_ADMIN_EMAIL`
-- `BOOTSTRAP_ADMIN_PASSWORD`
-- `BOOTSTRAP_ADMIN_NAME`
-
-Exemple minimal de `.env`:
-
-```env
-NODE_ENV=development
-PORT=3000
-CLIENT_NAME=Client A
-APP_VERSION=1.0.0
-DATABASE_URL=mysql://root:password@localhost:3306/moustass
-JWT_SECRET=change-me-in-dev
-JWT_ISSUER=moustass-backend
-JWT_AUDIENCE=moustass-client
-UPLOAD_DIR=storage/messages
-BOOTSTRAP_ADMIN_EMAIL=admin@client.local
-BOOTSTRAP_ADMIN_PASSWORD=ChangeMe123!
-BOOTSTRAP_ADMIN_NAME=Admin
-```
-
-## 5. Installation locale
-
-Depuis la racine du repository:
+Etapes:
 
 ```bash
 npm ci
 npm run prisma:generate
-```
-
-## 6. Base de donnees (Prisma)
-
-Le schema Prisma se trouve dans `prisma/schema.prisma`.
-
-Etapes recommandees:
-
-```bash
 npm run prisma:migrate
 npm run prisma:seed
-```
-
-Notes:
-- Le seed cree/met a jour un admin bootstrap.
-- Le client Prisma est aussi genere automatiquement via `postinstall`.
-
-## 7. Demarrage backend
-
-Mode developpement:
-
-```bash
 npm run dev
 ```
 
-Build production:
+Checks:
 
 ```bash
-npm run build
-npm run start
+curl http://localhost:3000/health
+curl http://localhost:3000/info
 ```
 
-Health check:
+## 6. Plan de completion recommande
 
-```http
-GET /health
-```
+### Priorite P0 (bloquant qualite)
 
-Info multi-tenant:
+- Ajouter des tests reels (unitaires + integration API)
+- Remplacer le script `test` placeholder
+- Ajouter un minimum de couverture sur auth, RBAC, upload/read/delete message
 
-```http
-GET /info
-```
+### Priorite P1 (securite/fonctionnel)
 
-Reponse:
+- Implementer OIDC (au moins login OIDC + mapping user)
+- Exposer endpoint de listing metadata/messages avec controle d acces
+- Finaliser le module notification (ou le retirer du scope initial)
 
-```json
-{
-  "client": "Client A",
-  "version": "1.0.0"
-}
-```
+### Priorite P2 (industrialisation)
 
-## 8. Execution via Docker
+- Versionner les migrations Prisma dans `prisma/migrations`
+- Etendre CI avec scan ZAP (si exige par le projet global)
+- Ajouter conventions de release (tag/version/changelog)
 
-Le projet fournit:
-- `Dockerfile`
-- `docker-compose.yml`
+## 7. Checklist de suivi
 
-Lancement:
-
-```bash
-docker compose up --build
-```
-
-Services demarres:
-- MySQL (`3306`)
-- Backend (`3000`)
-
-## 9. Endpoints backend
-
-### Auth
-- `POST /auth/login`
-- `GET /auth/me`
-
-### Users (admin)
-- `GET /users`
-- `POST /users`
-- `PUT /users/:id`
-- `DELETE /users/:id`
-
-### Messages
-- `POST /messages/upload`
-- `GET /messages/:id`
-- `DELETE /messages/:id`
-
-### License (admin)
-- `GET /license`
-- `POST /license`
-- `PUT /license/:id`
-- `DELETE /license/:id`
-
-### System
-- `GET /health`
-- `GET /info`
-
-## 10. Securite appliquee
-
-- Middleware `helmet` + `cors`
-- Rate limiting global
-- Validation d entrees via Zod
-- JWT obligatoire sur routes protegees
-- RBAC (`USER`, `ADMIN`)
-- Upload video:
-  1. calcul SHA-256
-  2. creation manifest
-  3. signature RSA-PSS
-  4. stockage
-  5. audit
-- Lecture video:
-  1. verification autorisation
-  2. verification signature
-  3. stream du fichier
-
-## 11. CI/CD GitHub Actions
-
-Le workflow est defini dans `.github/workflows/build.yml`.
-
-Declencheurs:
-- `push` sur branche `backend`
-- `pull_request` (opened, synchronize, reopened)
-
-Jobs:
-
-1. `quality`
-- `npm ci`
-- `npm run prisma:generate`
-- `npm run typecheck`
-- `npm test`
-- `npm run build`
-
-2. `sonarqube`
-- Scan Sonar via `SonarSource/sonarqube-scan-action@v6`
-- Secret requis: `SONAR_TOKEN`
-
-3. `snyk`
-- Install CLI Snyk
-- `snyk test --all-projects --severity-threshold=high`
-- `snyk code test --severity-threshold=high`
-- `snyk monitor --all-projects` sur push branche `backend`
-- Secret requis: `SNYK_TOKEN`
-
-## 12. Secrets GitHub a configurer
-
-Dans GitHub > Settings > Secrets and variables > Actions:
-
-- `SONAR_TOKEN`
-- `SNYK_TOKEN`
-
-Si SonarQube self-hosted est utilise, verifier aussi la config scanner selon l environnement.
-
-## 13. Checklist rapide
-
-- [ ] `.env` configure
-- [ ] MySQL accessible
-- [ ] `npm ci` execute
-- [ ] `npm run prisma:generate` execute
-- [ ] migrations appliquees
-- [ ] seed admin execute
-- [ ] backend demarre sur `/health`
-- [ ] workflow GitHub Actions actif
-- [ ] secrets `SONAR_TOKEN` et `SNYK_TOKEN` definis
+- [x] API de base demarre et expose `/health` et `/info`
+- [x] Auth JWT + RBAC fonctionnels
+- [x] CRUD users (admin)
+- [x] Upload/lecture/suppression messages avec signature
+- [x] CRUD license (admin)
+- [x] CI quality + SonarQube + Snyk
+- [ ] Tests automatises reels
+- [ ] OIDC operationnel
+- [ ] Notification operationnelle
+- [ ] Endpoint listing messages/metadata expose
+- [ ] Migrations Prisma versionnees
+- [ ] ZAP dans CI backend (si requis)
