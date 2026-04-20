@@ -1,18 +1,13 @@
-import type { Role } from '@prisma/client';
+// src/shared/types/express.d.ts
+import type { JwtClaims } from '../security/jwt';
 
 declare global {
   namespace Express {
-    interface AuthContext {
-      userId: string;
-      email: string;
-      role: Role;
-      clientName: string;
-    }
-
     interface Request {
-      auth?: AuthContext;
+      auth?: JwtClaims;
     }
   }
 }
 
+// Ce fichier doit être considéré comme un module pour les déclarations globales
 export {};

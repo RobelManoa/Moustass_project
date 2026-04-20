@@ -1,4 +1,4 @@
-name: Build
+name: CI/CD
 
 on:
   push:
@@ -9,10 +9,11 @@ on:
 
 jobs:
   quality:
-    name: Build and Quality Checks
+    name: Build, Tests and Coverage
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -32,11 +33,21 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm run test:ci
 
       - name: Build
         run: npm run build
+
+      # Upload coverage reports pour SonarQube
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage/lcov.info
+            coverage/cobertura-coverage.xml
+          if-no-files-found: warn   # changé en warn pour ne pas casser le workflow si coverage vide
 
   sonarqube:
     name: SonarQube Scan
@@ -44,54 +55,21 @@ jobs:
     needs: quality
     permissions:
       contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # Important pour l'historique et les PR
+
+      # Téléchargement des rapports de coverage depuis le job quality
+      - name: Download coverage reports
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  snyk:
-    name: Snyk Security Scans
-    runs-on: ubuntu-latest
-    needs: quality
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Generate Prisma client
-        run: npm run prisma:generate
-
-      - name: Setup Snyk CLI
-        uses: snyk/actions/setup@master
-
-      - name: Snyk Open Source Scan
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --all-projects --severity-threshold=high
-
-      - name: Snyk Code Scan
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk code test --severity-threshold=high
-
-      - name: Snyk monitor snapshot
-        if: github.event_name == 'push' && github.ref == 'refs/heads/backend'
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --all-projects

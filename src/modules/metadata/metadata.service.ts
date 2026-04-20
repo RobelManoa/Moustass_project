@@ -1,16 +1,28 @@
 import { prisma } from '../../infrastructure/prisma';
 
-export function getMessageById(id: string) {
+export async function getMessageById(id: string) {
   return prisma.videoMessage.findUnique({
     where: { id },
-    include: { owner: true },
   });
 }
 
-export function listMessagesForActor(actorId: string, isAdmin: boolean) {
+export async function getMessageByIdForActor(id: string, actorId: string, isAdmin = false) {
+  const message = await getMessageById(id);
+
+  if (!message) {
+    return null;
+  }
+
+  if (isAdmin || message.ownerId === actorId) {
+    return message;
+  }
+
+  return null;
+}
+
+export async function listMessagesForActor(actorId: string, isAdmin = false) {
   return prisma.videoMessage.findMany({
-    where: isAdmin ? {} : { ownerId: actorId },
+    where: isAdmin ? {} : { ownerId: actorId, deletedAt: null },
     orderBy: { createdAt: 'desc' },
-    include: { owner: true },
   });
 }
