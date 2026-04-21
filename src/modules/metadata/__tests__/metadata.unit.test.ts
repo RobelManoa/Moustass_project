@@ -62,6 +62,14 @@ describe('Metadata Service - Unit Tests', () => {
     expect(result).toBeNull();
   });
 
+  it('getMessageByIdForActor devrait retourner null si message introuvable', async () => {
+    prisma.videoMessage.findUnique.mockResolvedValue(null);
+
+    const result = await getMessageByIdForActor('missing', ownerId, false);
+
+    expect(result).toBeNull();
+  });
+
   it('listMessagesForActor devrait filtrer les messages du propriétaire', async () => {
     prisma.videoMessage.findMany.mockResolvedValue([mockMessage]);
 

@@ -1,4 +1,5 @@
 import { createLicense, deleteLicense, listLicenses, updateLicense } from '../license.service';
+import { notFound } from '../../../shared/http-errors';
 
 jest.mock('../../../infrastructure/prisma', () => ({
   prisma: {
@@ -48,6 +49,38 @@ describe('License Service - Unit Tests', () => {
     expect(result).toEqual({ id: 'l1', clientName: 'New' });
   });
 
+  it('updateLicense convertit les chaines vides en null pour email/phone/logoUrl', async () => {
+    prisma.license.findUnique.mockResolvedValue({ id: 'l1' });
+    prisma.license.update.mockResolvedValue({ id: 'l1' });
+
+    await updateLicense('l1', {
+      email: '',
+      phone: '',
+      logoUrl: '',
+      expiresAt: null,
+    });
+
+    expect(prisma.license.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'l1' },
+        data: expect.objectContaining({
+          email: null,
+          phone: null,
+          logoUrl: null,
+          expiresAt: null,
+        }),
+      })
+    );
+  });
+
+  it('updateLicense rejette une licence introuvable', async () => {
+    prisma.license.findUnique.mockResolvedValue(null);
+
+    await expect(updateLicense('missing', { clientName: 'X' })).rejects.toThrow(
+      notFound('Licence introuvable')
+    );
+  });
+
   it('deleteLicense supprime une licence existante', async () => {
     prisma.license.findUnique.mockResolvedValue({ id: 'l1' });
     prisma.license.delete.mockResolvedValue({ id: 'l1' });
@@ -55,5 +88,13 @@ describe('License Service - Unit Tests', () => {
     const result = await deleteLicense('l1');
 
     expect(result).toEqual({ deleted: true });
+  });
+
+  it('deleteLicense rejette une licence introuvable', async () => {
+    prisma.license.findUnique.mockResolvedValue(null);
+
+    await expect(deleteLicense('missing')).rejects.toThrow(
+      notFound('Licence introuvable')
+    );
   });
 });

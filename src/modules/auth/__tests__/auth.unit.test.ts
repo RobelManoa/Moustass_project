@@ -38,8 +38,12 @@ describe('Auth Service - Unit Tests', () => {
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
       const result = await authService.login({
-        email: 'test@client.local',
+        email: ' TEST@CLIENT.LOCAL ',
         password: 'password123',
+      });
+
+      expect(prisma.user.findUnique).toHaveBeenCalledWith({
+        where: { email: 'test@client.local' },
       });
 
       expect(result).toHaveProperty('token');
@@ -63,6 +67,40 @@ describe('Auth Service - Unit Tests', () => {
       await expect(
         authService.login({ email: 'test@test.com', password: 'wrong' })
       ).rejects.toThrow(unauthorized('Identifiants invalides'));
+    });
+  });
+
+  describe('me()', () => {
+    it('should return public user when found', async () => {
+      const now = new Date('2026-04-21T12:00:00.000Z');
+      (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+        id: 'user-123',
+        email: 'test@client.local',
+        passwordHash: 'secret-hash',
+        role: 'USER',
+        name: null,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      const result = await authService.me('user-123');
+
+      expect(result).toEqual({
+        id: 'user-123',
+        email: 'test@client.local',
+        name: '',
+        role: 'USER',
+        createdAt: now,
+        updatedAt: now,
+      });
+    });
+
+    it('should throw unauthorized when user is missing', async () => {
+      (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+      await expect(authService.me('missing-id')).rejects.toThrow(
+        unauthorized('Utilisateur introuvable')
+      );
     });
   });
 
