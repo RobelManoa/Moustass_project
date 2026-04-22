@@ -223,6 +223,25 @@ GET /info
 
 * POST `/auth/login`
 * GET `/auth/me`
+* GET `/auth/oidc/login`
+* GET `/auth/oidc/callback`
+
+#### OIDC configuration (backend)
+
+```env
+OIDC_ISSUER=https://your-idp.example.com
+OIDC_CLIENT_ID=your-client-id
+OIDC_CLIENT_SECRET=your-client-secret
+OIDC_REDIRECT_URI=http://localhost:3001/auth/oidc/callback
+OIDC_SCOPES=openid profile email
+OIDC_POST_LOGIN_REDIRECT=http://localhost:5173/auth/oidc/callback
+```
+
+Usage:
+
+* Browser login: `GET /auth/oidc/login`
+* Optional redirect target after local JWT issuance:
+  `GET /auth/oidc/login?redirect=http://localhost:5173/auth/oidc/callback`
 
 ### 🔹 Users
 

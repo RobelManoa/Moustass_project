@@ -24,16 +24,29 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": ["<rootDir>/src"],
-    "testMatch": ["**/__tests__/**/*.test.ts"],
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
-    "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test/setup.ts"
+    ],
     "collectCoverage": true,
     "coverageDirectory": "coverage",
-    "coveragePathIgnorePatterns": ["/node_modules/", "/test/"],
-    "coverageReporters": ["text", "lcov", "cobertura"],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "cobertura"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 15,
@@ -52,6 +65,7 @@
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
+    "jose": "^4.15.9",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "zod": "^3.24.2"

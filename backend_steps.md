@@ -2,7 +2,7 @@
 
 ## 1. Objectif
 
-Ce document decrit l etat reel du backend au 20/04/2026:
+Ce document decrit l etat reel du backend au 22/04/2026:
 - ce qui est deja implemente
 - ce qui est partiel ou manquant
 - les prochaines etapes prioritaires
@@ -18,8 +18,6 @@ Le constat est base sur la lecture du code source, des scripts npm, de Prisma, d
 - Pipeline CI present (quality + SonarQube + Snyk)
 
 Points majeurs manquants:
-- Pas de vrais tests automatisees (script test placeholder)
-- OIDC (Open ID Connect) non implemente (variables presentes, logique absente)
 - Module notification encore placeholder
 - Pas de migrations Prisma versionnees dans le repo
 - Certaines capacites existent en service mais pas exposees en endpoint (ex: listing metadata messages)
@@ -52,6 +50,8 @@ Points majeurs manquants:
 - Auth:
   - `POST /auth/login`
   - `GET /auth/me`
+  - `GET /auth/oidc/login`
+  - `GET /auth/oidc/callback`
 - Users (ADMIN):
   - `GET /users`
   - `POST /users`
@@ -91,19 +91,20 @@ Points majeurs manquants:
 
 ### 4.1 Tests
 
-Statut: MANQUANT
+Statut: IMPLEMENTE
 
-- Aucun fichier `*.test.ts` ou `*.spec.ts` detecte
-- `npm test` est un placeholder (`No tests configured yet`)
-- Impact: quality gate CI peu pertinente sur la partie tests
+- Tests unitaires reels presents sur les services (auth/user/video/license/metadata/audit/crypto/notification)
+- Scripts Jest operationnels (`test`, `test:ci`, `test:services`)
+- Impact: quality gate exploitable avec couverture sur le coeur metier
 
 ### 4.2 OIDC
 
-Statut: PARTIEL
+Statut: IMPLEMENTE
 
-- Variables `OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET` presentes
-- Aucune logique OIDC detectee dans les modules auth
-- Impact: authentification feder ee non disponible
+- Flux Authorization Code + PKCE implemente dans le module auth
+- Discovery provider, echange de code, verification ID token (JWKS), mapping/upsert user, emission JWT locale
+- Endpoints disponibles: `GET /auth/oidc/login` et `GET /auth/oidc/callback`
+- Variables supportees: `OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_REDIRECT_URI`, `OIDC_SCOPES`, `OIDC_POST_LOGIN_REDIRECT`
 
 ### 4.3 Notification
 
@@ -168,7 +169,7 @@ curl http://localhost:3000/info
 
 ### Priorite P1 (securite/fonctionnel)
 
-- Implementer OIDC (au moins login OIDC + mapping user)
+- Durcir OIDC (tests unitaires dedies + gestion fine erreurs provider)
 - Exposer endpoint de listing metadata/messages avec controle d acces
 - Finaliser le module notification (ou le retirer du scope initial)
 
@@ -186,8 +187,8 @@ curl http://localhost:3000/info
 - [x] Upload/lecture/suppression messages avec signature
 - [x] CRUD license (admin)
 - [x] CI quality + SonarQube + Snyk
-- [ ] Tests automatises reels
-- [ ] OIDC operationnel
+- [x] Tests automatises reels
+- [x] OIDC operationnel
 - [ ] Notification operationnelle
 - [ ] Endpoint listing messages/metadata expose
 - [ ] Migrations Prisma versionnees
