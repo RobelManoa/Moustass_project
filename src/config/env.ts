@@ -29,6 +29,9 @@ const envSchema = z.object({
   OIDC_ISSUER: z.string().optional().default(''),
   OIDC_CLIENT_ID: z.string().optional().default(''),
   OIDC_CLIENT_SECRET: z.string().optional().default(''),
+  OIDC_REDIRECT_URI: z.string().optional().default(''),
+  OIDC_SCOPES: z.string().optional().default('openid profile email'),
+  OIDC_POST_LOGIN_REDIRECT: z.string().optional().default(''),
 
   // Clés RSA (pour plus tard avec le module crypto)
   JWT_PRIVATE_KEY: z.string().optional().default(''),
