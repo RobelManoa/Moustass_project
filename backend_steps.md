@@ -11,14 +11,13 @@ Le constat est base sur la lecture du code source, des scripts npm, de Prisma, d
 
 ## 2. Etat global (resume)
 
-- Architecture modulaire en place (auth, user, video, license, audit, crypto, metadata, notification)
+- Architecture modulaire en place (auth, user, video, license, audit, crypto, metadata)
 - API Express fonctionnelle avec securite de base (helmet, cors, rate limit, JWT, RBAC)
 - Persistence MySQL + Prisma en place
 - Flux principal video (upload, lecture, suppression) implemente
 - Pipeline CI present (quality + SonarQube + Snyk)
 
 Points majeurs manquants:
-- Module notification encore placeholder
 - Pas de migrations Prisma versionnees dans le repo
 - Certaines capacites existent en service mais pas exposees en endpoint (ex: listing metadata messages)
 
@@ -93,7 +92,7 @@ Points majeurs manquants:
 
 Statut: IMPLEMENTE
 
-- Tests unitaires reels presents sur les services (auth/user/video/license/metadata/audit/crypto/notification)
+- Tests unitaires reels presents sur les services (auth/user/video/license/metadata/audit/crypto)
 - Scripts Jest operationnels (`test`, `test:ci`, `test:services`)
 - Impact: quality gate exploitable avec couverture sur le coeur metier
 
@@ -106,28 +105,21 @@ Statut: IMPLEMENTE
 - Endpoints disponibles: `GET /auth/oidc/login` et `GET /auth/oidc/callback`
 - Variables supportees: `OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`, `OIDC_REDIRECT_URI`, `OIDC_SCOPES`, `OIDC_POST_LOGIN_REDIRECT`
 
-### 4.3 Notification
-
-Statut: PARTIEL
-
-- `src/modules/notification/notification.service.ts` retourne un placeholder
-- Pas d integration SMTP/provider
-
-### 4.4 Metadata / listing messages
+### 4.3 Metadata / listing messages
 
 Statut: PARTIEL
 
 - Service `listMessagesForActor` present dans metadata
 - Pas de route/controller expose pour lister les messages
 
-### 4.5 Prisma migrations
+### 4.4 Prisma migrations
 
 Statut: MANQUANT DANS LE REPO
 
 - Dossier `prisma/migrations` absent
 - Le schema existe, mais l historique de migration n est pas versionne
 
-### 4.6 DevSecOps complet
+### 4.5 DevSecOps complet
 
 Statut: PARTIEL
 
@@ -171,7 +163,6 @@ curl http://localhost:3000/info
 
 - Durcir OIDC (tests unitaires dedies + gestion fine erreurs provider)
 - Exposer endpoint de listing metadata/messages avec controle d acces
-- Finaliser le module notification (ou le retirer du scope initial)
 
 ### Priorite P2 (industrialisation)
 
@@ -189,7 +180,6 @@ curl http://localhost:3000/info
 - [x] CI quality + SonarQube + Snyk
 - [x] Tests automatises reels
 - [x] OIDC operationnel
-- [ ] Notification operationnelle
 - [ ] Endpoint listing messages/metadata expose
 - [ ] Migrations Prisma versionnees
 - [ ] ZAP dans CI backend (si requis)
