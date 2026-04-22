@@ -76,7 +76,6 @@ backend/
       metadata/
       license/
       audit/
-      notification/
     infrastructure/
     shared/
 
@@ -179,7 +178,6 @@ iac/
 * **metadata** → accès base de données
 * **license** → gestion SaaS client
 * **audit** → journalisation sécurisée
-* **notification** → email (optionnel)
 
 ---
 
